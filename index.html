@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>MG's Air Conditioning &amp; Heating | Visalia, CA HVAC Experts</title>
+<meta name="description" content="Family-owned, owner-operated HVAC company serving Visalia and the surrounding Tulare, Kings, Kern, and Fresno counties. AC, heating, and indoor air quality — no high-pressure sales, ever." />
+
+<style>
+
+  /* ============ FONTS ============ */
+  @font-face{
+    font-family:"Suisse Intl";
+    src:url("References/fonts/SuisseIntl/SuisseIntl-Light.ttf") format("truetype");
+    font-weight:300; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Suisse Intl";
+    src:url("References/fonts/SuisseIntl/SuisseIntl-Regular.ttf") format("truetype");
+    font-weight:400; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Suisse Intl";
+    src:url("References/fonts/SuisseIntl/SuisseIntl-Bold.ttf") format("truetype");
+    font-weight:700; font-style:normal; font-display:swap;
+  }
+  @font-face{
+    font-family:"Inter";
+    src:url("References/fonts/inter/Inter-VariableFont_opsz,wght.ttf") format("truetype-variations");
+    font-weight:100 900; font-style:normal; font-display:swap;
+  }
+
+  /* ============ RESET ============ */
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; }
+  img{ max-width:100%; display:block; }
+  a{ color:inherit; text-decoration:none; }
+  button{ font:inherit; cursor:pointer; }
+  ul{ list-style:none; }
+
+  /* ============ TOKENS ============ */
+  :root{
+    --red:#b20606;
+    --red-dark:#8a0505;
+    --navy:#000080;
+    --navy-deep:#000058;
+    --cyan:#0dd9e7;
+    --cyan-deep:#08b8c4;
+    --off:#fcfcfc;
+    --ink:#12142b;          /* readable near-navy body text */
+    --muted:#5b5e78;
+    --line:rgba(0,0,128,0.10);
+    --card:#ffffff;
+    --radius-lg:28px;
+    --radius-md:18px;
+    --radius-sm:12px;
+    --shadow-soft:0 20px 50px -20px rgba(0,0,50,0.25);
+    --shadow-tight:0 8px 24px -12px rgba(0,0,50,0.28);
+    --container:1180px;
+  }
+
+  html, body{ max-width:100%; overflow-x:hidden; }
+  body{
+    font-family:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color:var(--ink);
+    background:var(--off);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+
+  h1,h2,h3,h4{
+    font-family:"Suisse Intl","Inter",sans-serif;
+    color:var(--navy);
+    line-height:1.05;
+    letter-spacing:-0.02em;
+    font-weight:700;
+  }
+
+  .wrap{
+    width:100%;
+    max-width:var(--container);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px;
+    max-width:100%; box-sizing:border-box;
+    font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+    color:var(--navy);
+    background:rgba(13,217,231,0.14);
+    border:1px solid rgba(13,217,231,0.4);
+    padding:7px 16px;
+    border-radius:999px;
+  }
+  .eyebrow.on-dark{
+    color:var(--off);
+    background:rgba(255,255,255,0.12);
+    border-color:rgba(255,255,255,0.28);
+  }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 3px rgba(13,217,231,0.25); }
+
+  /* ============ BUTTONS ============ */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    padding:16px 30px;
+    border-radius:999px;
+    font-weight:600; font-size:15.5px;
+    border:1px solid transparent;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    white-space:nowrap;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-red{ background:var(--red); color:#fff; box-shadow:0 14px 30px -12px rgba(178,6,6,0.55); }
+  .btn-red:hover{ background:var(--red-dark); box-shadow:0 18px 34px -10px rgba(178,6,6,0.6); }
+  .btn-navy{ background:var(--navy); color:#fff; box-shadow:0 14px 30px -12px rgba(0,0,128,0.5); }
+  .btn-navy:hover{ background:var(--navy-deep); }
+  .btn-ghost{ background:rgba(255,255,255,0.08); color:var(--off); border-color:rgba(255,255,255,0.4); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.16); }
+  .btn-outline{ background:transparent; color:var(--navy); border-color:var(--line); }
+  .btn-outline:hover{ background:rgba(0,0,128,0.05); }
+  .btn-sm{ padding:11px 20px; font-size:14px; }
+  .btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+  /* ============ HEADER ============ */
+  header{
+    position:sticky; top:0; z-index:100;
+    background:rgba(252,252,252,0.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:12px;
+    padding:14px 0;
+  }
+  .brand{ display:flex; align-items:center; gap:11px; min-width:0; flex-shrink:1; }
+  .brand img{ height:34px; width:auto; flex-shrink:0; }
+  .brand-text{ font-family:"Suisse Intl"; font-weight:700; font-size:15px; color:var(--navy); line-height:1.15; white-space:nowrap; }
+  .brand-text span{ display:block; font-family:"Inter"; font-weight:500; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); }
+
+  .nav-links{
+    display:flex; align-items:center; gap:34px; flex-wrap:wrap;
+  }
+  .nav-links a{
+    font-size:14.5px; font-weight:500; color:var(--ink);
+    transition:color .15s ease;
+  }
+  .nav-links a:hover{ color:var(--navy); }
+
+  .nav-cta{ display:flex; align-items:center; gap:14px; flex-shrink:0; }
+  .nav-phone{ display:flex; flex-direction:column; text-align:right; }
+  .nav-phone small{ font-size:11px; color:var(--muted); font-weight:500; }
+  .nav-phone strong{ font-size:15px; color:var(--navy); font-weight:700; }
+
+  .nav-toggle, .nav-toggle-label{ display:none; }
+
+  /* ============ HERO ============ */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:76px 0 90px;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(13,217,231,0.16), transparent 60%),
+      radial-gradient(900px 500px at 100% 0%, rgba(0,0,128,0.10), transparent 55%),
+      var(--off);
+  }
+  .blob{ position:absolute; border-radius:50%; filter:blur(70px); opacity:0.55; z-index:0; pointer-events:none; }
+  .blob-1{ width:420px; height:420px; background:var(--cyan); top:-160px; left:-120px; }
+  .blob-2{ width:360px; height:360px; background:var(--navy); bottom:-140px; right:-80px; opacity:0.18; }
+
+  .hero-grid{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:56px; align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(38px, 5.4vw, 62px);
+    margin:20px 0 22px;
+  }
+  .hero h1 em{
+    font-style:normal;
+    background:linear-gradient(100deg, var(--red) 0%, var(--navy) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero p.lead{
+    font-size:18px; color:var(--muted); max-width:520px; margin-bottom:34px;
+  }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:38px; max-width:100%; }
+
+  .hero-trust{ display:flex; flex-wrap:wrap; gap:18px 26px; max-width:100%; }
+  .hero-trust div{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:600; color:var(--navy); min-width:0; }
+  .hero-trust svg{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; }
+
+  .hero-visual{ position:relative; }
+  .hero-photo{
+    border-radius:var(--radius-lg);
+    overflow:hidden;
+    box-shadow:var(--shadow-soft);
+    aspect-ratio:4/4.6;
+    position:relative;
+  }
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; }
+  .hero-photo::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(200deg, rgba(0,0,128,0.32), rgba(13,217,231,0.10) 55%, rgba(0,0,0,0) 80%);
+  }
+  .float-card{
+    position:absolute; background:#fff; border-radius:var(--radius-md);
+    box-shadow:var(--shadow-tight); padding:16px 18px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .float-card.emergency{ top:26px; left:-26px; }
+  .float-card.emergency .ic{ background:var(--red); }
+  .float-card.owner{ bottom:30px; right:-26px; }
+  .float-card.owner .ic{ background:var(--navy); }
+  .float-card .ic{
+    width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  }
+  .float-card .ic svg{ width:20px; height:20px; color:#fff; }
+  .float-card strong{ display:block; font-size:14px; color:var(--navy); }
+  .float-card span{ font-size:12px; color:var(--muted); }
+
+  /* ============ TRUST BAR ============ */
+  .trust-bar{ background:var(--navy); color:#fff; padding:26px 0; }
+  .trust-bar .wrap{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px; }
+  .trust-item{ display:flex; align-items:center; gap:12px; flex:1 1 200px; }
+  .trust-item svg{ width:26px; height:26px; color:var(--cyan); flex-shrink:0; }
+  .trust-item strong{ display:block; font-size:15px; font-weight:700; }
+  .trust-item span{ font-size:12.5px; color:rgba(255,255,255,0.65); }
+
+  /* ============ SECTION SHELL ============ */
+  section{ padding:96px 0; }
+  .section-head{ max-width:640px; margin-bottom:56px; }
+  .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+  .section-head h2{ font-size:clamp(30px,4vw,42px); margin:16px 0 14px; }
+  .section-head p{ color:var(--muted); font-size:16.5px; }
+
+  /* ============ SERVICES ============ */
+  .services-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+  .service-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:30px 26px; transition:transform .2s ease, box-shadow .2s ease;
+    display:flex; flex-direction:column; gap:16px;
+  }
+  .service-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-tight); }
+  .service-icon{
+    width:52px; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+  }
+  .service-icon svg{ width:26px; height:26px; }
+  .service-card.cool .service-icon{ background:rgba(13,217,231,0.16); }
+  .service-card.cool .service-icon svg{ color:var(--cyan-deep); }
+  .service-card.heat .service-icon{ background:rgba(178,6,6,0.12); }
+  .service-card.heat .service-icon svg{ color:var(--red); }
+  .service-card.neutral .service-icon{ background:rgba(0,0,128,0.10); }
+  .service-card.neutral .service-icon svg{ color:var(--navy); }
+  .service-card h3{ font-size:19px; }
+  .service-card p{ color:var(--muted); font-size:14.5px; }
+  .service-card ul{ display:flex; flex-direction:column; gap:7px; margin-top:2px; }
+  .service-card ul li{ font-size:13.5px; color:var(--ink); display:flex; align-items:center; gap:8px; }
+  .service-card ul li::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--cyan-deep); flex-shrink:0; }
+  .service-card.heat ul li::before{ background:var(--red); }
+  .service-card.neutral ul li::before{ background:var(--navy); }
+
+  .services-note{
+    margin-top:34px; text-align:center; color:var(--muted); font-size:14.5px;
+  }
+
+  /* ============ OUR STORY ============ */
+  .story{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
+  .story::before{
+    content:""; position:absolute; width:520px; height:520px; border-radius:50%;
+    background:var(--cyan); opacity:0.14; filter:blur(90px); top:-200px; right:-160px;
+  }
+  .story-grid{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:64px; align-items:center; }
+  .avatar-badge{
+    width:104px; height:104px; border-radius:50%;
+    background:linear-gradient(135deg, var(--cyan), var(--navy-deep));
+    display:flex; align-items:center; justify-content:center;
+    font-family:"Suisse Intl"; font-weight:700; font-size:32px; color:#fff;
+    box-shadow:0 20px 40px -14px rgba(13,217,231,0.5);
+    margin-bottom:26px;
+  }
+  .story-card{
+    background:rgba(255,255,255,0.06);
+    border:1px solid rgba(255,255,255,0.14);
+    border-radius:var(--radius-lg);
+    padding:44px;
+  }
+  .story-card h2{ color:#fff; font-size:clamp(26px,3.4vw,34px); margin-bottom:18px; }
+  .story-card .quote{
+    font-size:18px; line-height:1.65; color:rgba(255,255,255,0.88); margin-bottom:22px;
+  }
+  .story-card .sign{ font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
+  .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(255,255,255,0.6); margin-top:2px; }
+
+  .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
+  .stat-tile{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:var(--radius-md); padding:24px; }
+  .stat-tile strong{ display:block; font-family:"Suisse Intl"; font-size:30px; color:var(--cyan); margin-bottom:6px; }
+  .stat-tile span{ font-size:13.5px; color:rgba(255,255,255,0.72); }
+
+  /* ============ GALLERY ============ */
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:150px; gap:16px;
+  }
+  .gallery-grid a{ position:relative; border-radius:var(--radius-md); overflow:hidden; display:block; }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
+  .gallery-grid a:hover img{ transform:scale(1.06); }
+  .gallery-grid a::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(180deg, transparent 55%, rgba(0,0,50,0.55));
+    opacity:0; transition:opacity .25s ease;
+  }
+  .gallery-grid a:hover::after{ opacity:1; }
+  .gallery-grid span{
+    position:absolute; left:16px; bottom:14px; color:#fff; font-size:13px; font-weight:600;
+    opacity:0; transform:translateY(6px); transition:all .25s ease; z-index:1;
+  }
+  .gallery-grid a:hover span{ opacity:1; transform:translateY(0); }
+  .g-tall{ grid-row:span 2; }
+  .g-wide{ grid-column:span 2; }
+
+  /* ============ BOOKING ============ */
+  .booking{
+    background:linear-gradient(160deg, rgba(13,217,231,0.10), rgba(0,0,128,0.05));
+  }
+  .booking-shell{
+    display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:0;
+    background:#fff; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-soft);
+    border:1px solid var(--line);
+  }
+  .booking-side{
+    background:var(--navy); color:#fff; padding:52px 44px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .booking-side h2{ color:#fff; font-size:clamp(26px,3vw,32px); margin:14px 0 16px; }
+  .booking-side p{ color:rgba(255,255,255,0.72); font-size:15px; margin-bottom:30px; }
+  .booking-perks{ display:flex; flex-direction:column; gap:16px; margin-bottom:36px; }
+  .booking-perks div{ display:flex; align-items:center; gap:12px; font-size:14.5px; }
+  .booking-perks svg{ width:20px; height:20px; color:var(--cyan); flex-shrink:0; }
+  .emergency-box{
+    background:rgba(178,6,6,0.22); border:1px solid rgba(178,6,6,0.5);
+    border-radius:var(--radius-md); padding:20px 22px;
+  }
+  .emergency-box strong{ display:block; font-size:14.5px; margin-bottom:4px; }
+  .emergency-box a{ font-family:"Suisse Intl"; font-size:22px; font-weight:700; color:var(--cyan); }
+
+  .booking-form{ padding:52px 44px; }
+  .field-row{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; margin-bottom:16px; }
+  .field{ display:flex; flex-direction:column; gap:7px; }
+  .field.full{ grid-column:1 / -1; }
+  .field label{ font-size:13px; font-weight:600; color:var(--navy); }
+  .field input, .field select, .field textarea{
+    font:inherit; font-size:14.5px; padding:13px 15px; border-radius:12px;
+    border:1.5px solid rgba(0,0,128,0.15); background:var(--off); color:var(--ink);
+    outline:none; transition:border-color .15s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{ border-color:var(--cyan-deep); }
+  .field textarea{ resize:vertical; min-height:90px; font-family:inherit; }
+  .booking-form .btn{ width:100%; margin-top:8px; }
+  .form-fineprint{ font-size:12px; color:var(--muted); margin-top:14px; text-align:center; }
+
+  /* ============ FOOTER ============ */
+  footer{ background:#05052b; color:rgba(255,255,255,0.75); padding:70px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr); gap:40px; margin-bottom:50px; }
+  .footer-brand .brand-text{ color:#fff; }
+  .footer-brand .brand-text span{ color:rgba(255,255,255,0.55); }
+  .footer-brand p{ font-size:14px; margin:18px 0 22px; max-width:280px; color:rgba(255,255,255,0.55); }
+  .footer-social{ display:flex; gap:10px; }
+  .footer-social a{
+    width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.08);
+    display:flex; align-items:center; justify-content:center; transition:background .15s ease;
+  }
+  .footer-social a:hover{ background:var(--cyan); }
+  .footer-social svg{ width:17px; height:17px; }
+
+  footer h4{ color:#fff; font-size:14px; margin-bottom:20px; letter-spacing:0.04em; text-transform:uppercase; }
+  .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
+  .footer-col a, .footer-col li{ font-size:14px; color:rgba(255,255,255,0.6); }
+  .footer-col a:hover{ color:#fff; }
+
+  .footer-bottom{
+    border-top:1px solid rgba(255,255,255,0.1); padding-top:26px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;
+    font-size:12.5px; color:rgba(255,255,255,0.4);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 980px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .hero-visual{ order:-1; max-width:420px; margin:0 auto; }
+    .story-grid{ grid-template-columns:1fr; }
+    .booking-shell{ grid-template-columns:1fr; }
+    .services-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .footer-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+    .gallery-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .g-wide{ grid-column:span 1; }
+  }
+
+  @media (max-width: 720px){
+    .nav-links{
+      display:none;
+      position:absolute; top:100%; left:0; right:0;
+      background:var(--off); border-bottom:1px solid var(--line);
+      flex-direction:column; align-items:flex-start; gap:0; padding:8px 24px 18px;
+    }
+    .nav-links a{ padding:12px 0; width:100%; border-bottom:1px solid var(--line); }
+    .nav-toggle:checked ~ .nav-links{ display:flex; }
+    .nav-toggle-label{
+      display:flex; align-items:center; justify-content:center;
+      width:40px; height:40px; border-radius:50%; background:rgba(0,0,128,0.08);
+    }
+    .nav-toggle-label svg{ width:20px; height:20px; color:var(--navy); }
+    .nav-phone{ display:none; }
+    .brand-text span{ display:none; }
+    .field-row{ grid-template-columns:1fr; }
+    .services-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; gap:34px; }
+    .trust-bar .wrap{ flex-direction:column; }
+    .float-card{ display:none; }
+    .booking-side, .booking-form{ padding:36px 26px; }
+    section{ padding:64px 0; }
+    .gallery-grid{ grid-auto-rows:130px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand">
+      <img src="assets/images/logo-wordmark.png" alt="MG's logo" />
+      <span class="brand-text">MG'S<span>Air Conditioning &amp; Heating</span></span>
+    </a>
+
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" />
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#story">Our Story</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#booking">Book Now</a>
+    </nav>
+
+    <div class="nav-cta">
+      <div class="nav-phone">
+        <small>Available 24/7 for emergencies</small>
+        <strong>559-623-2210</strong>
+      </div>
+      <a href="tel:5596232210" class="btn btn-red btn-sm">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call Now
+      </a>
+      <label for="nav-toggle" class="nav-toggle-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+      </label>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> Visalia, CA &middot; Serving Tulare, Kings, Kern &amp; Fresno Counties</div>
+      <h1>Comfort that shows up &mdash; <em>day or night.</em></h1>
+      <p class="lead">MG's is a family-owned HVAC company built on one idea: the owner shows up. Miguel personally oversees every estimate, install, and walkthrough &mdash; no salespeople, no pressure, no passing you around.</p>
+      <div class="hero-actions">
+        <a href="tel:5596232210" class="btn btn-red">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Call 559-623-2210
+        </a>
+        <a href="#booking" class="btn btn-outline">Book a Free Estimate</a>
+      </div>
+      <div class="hero-trust">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg>Licensed &amp; Insured &middot; #960470</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>24/7 Emergency Line</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Family-Owned &amp; Operated</div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-photo">
+        <img src="assets/images/hero-home.jpg" alt="Modern home comfortably cooled and heated by MG's Air Conditioning & Heating" />
+      </div>
+      <div class="float-card emergency">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg></div>
+        <div><strong>Fast Response</strong><span>Emergencies handled same-day</span></div>
+      </div>
+      <div class="float-card owner">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><strong>Miguel Guerra</strong><span>On every job, start to finish</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST BAR ============ -->
+<div class="trust-bar">
+  <div class="wrap">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <div><strong>Family-Owned</strong><span>Since day one, no franchise</span></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <div><strong>No High-Pressure Sales</strong><span>Honest quotes, every time</span></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+      <div><strong>4 Counties Served</strong><span>Tulare, Kings, Kern &amp; Fresno</span></div>
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
+      <div><strong>Financing Available</strong><span>Plus free, no-obligation estimates</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">What We Do</div>
+      <h2>Full-service HVAC, all under one roof.</h2>
+      <p>From a struggling AC in July to a furnace tune-up before winter, MG's handles installation, repair, and maintenance across every major system &mdash; residential and commercial.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <div class="service-card cool">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1M2 12h20"/></svg></div>
+        <h3>Air Conditioning</h3>
+        <p>Keep Valley summers under control with a system sized right for your home.</p>
+        <ul>
+          <li>New AC installation &amp; replacement</li>
+          <li>Repairs &amp; refrigerant recharge</li>
+          <li>Seasonal maintenance plans</li>
+        </ul>
+      </div>
+
+      <div class="service-card heat">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.38 0 2-1 2-2 0-1.5-2-2-2-3.5 0-1 .5-2 1.5-2 .5 1 1.5 1.5 1.5 3a4 4 0 0 1-8 0c0-2.5 2-3.5 2-6 0-1.5-.5-2.5-1-3 3 0 6 2.5 6 7a6 6 0 0 1-6 6 6 6 0 0 1-6-6c0-3 1.5-4.5 3-6"/></svg></div>
+        <h3>Furnace &amp; Heating</h3>
+        <p>Dependable heat when the Valley fog rolls in, from tune-ups to full replacements.</p>
+        <ul>
+          <li>Furnace installation &amp; repair</li>
+          <li>Annual safety inspections</li>
+          <li>Emergency no-heat calls</li>
+        </ul>
+      </div>
+
+      <div class="service-card heat">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+        <h3>Heat Pumps</h3>
+        <p>One efficient system for year-round heating and cooling.</p>
+        <ul>
+          <li>Heat pump installation &amp; replacement</li>
+          <li>Repair &amp; diagnostics</li>
+          <li>Efficiency tune-ups</li>
+        </ul>
+      </div>
+
+      <div class="service-card cool">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M9 16v4M15 16v4"/></svg></div>
+        <h3>Mini-Splits</h3>
+        <p>Targeted, ductless comfort for additions, garages, and room-by-room control.</p>
+        <ul>
+          <li>Ductless system installation</li>
+          <li>Multi-zone setups</li>
+          <li>Repair &amp; maintenance</li>
+        </ul>
+      </div>
+
+      <div class="service-card neutral">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-8 4 16 2-8h7"/></svg></div>
+        <h3>Ductwork</h3>
+        <p>Sealed, sized-right ductwork means your system isn't fighting to keep up.</p>
+        <ul>
+          <li>Duct installation &amp; replacement</li>
+          <li>Leak detection &amp; sealing</li>
+          <li>Airflow diagnostics</li>
+        </ul>
+      </div>
+
+      <div class="service-card neutral">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-4.4 7-11.5V5l-7-3-7 3v5.5C5 17.6 12 22 12 22z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+        <h3>Indoor Air Quality</h3>
+        <p>Cleaner air for allergy season and every season in between.</p>
+        <ul>
+          <li>Air purifier &amp; UV light install</li>
+          <li>Smart thermostat setup</li>
+          <li>Whole-home filtration</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <p class="services-note">Also servicing package units, swamp cooler replacements, and new-construction HVAC. <a href="tel:5596232210" style="color:var(--navy); font-weight:600; text-decoration:underline;">Don't see your issue? Just call.</a></p>
+  </div>
+</section>
+
+<!-- ============ OUR STORY ============ -->
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div>
+      <div class="avatar-badge">MG</div>
+      <div class="story-stats">
+        <div class="stat-tile"><strong>100%</strong><span>Of jobs personally reviewed by Miguel</span></div>
+        <div class="stat-tile"><strong>4</strong><span>Counties served within a 1-hour radius</span></div>
+        <div class="stat-tile"><strong>0</strong><span>High-pressure sales pitches, guaranteed</span></div>
+        <div class="stat-tile"><strong>24/7</strong><span>Emergency line, always answered</span></div>
+      </div>
+    </div>
+
+    <div class="story-card">
+      <div class="eyebrow on-dark">Our Story</div>
+      <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
+      <p class="quote">
+        "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
+      </p>
+      <div class="sign">Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">Recent Work</div>
+      <h2>See MG's in action around the Valley.</h2>
+      <p>A look at recent installs, repairs, and the systems we work on every day.</p>
+    </div>
+
+    <div class="gallery-grid">
+      <a href="#" class="g-tall"><img src="assets/images/gallery-3.jpg" alt="HVAC technicians completing a rooftop installation"/><span>Rooftop System Install</span></a>
+      <a href="#"><img src="assets/images/gallery-1.jpg" alt="Newly installed outdoor AC condenser unit"/><span>AC Condenser Install</span></a>
+      <a href="#"><img src="assets/images/gallery-2.jpg" alt="Ductless mini-split unit mounted on exterior wall"/><span>Mini-Split Setup</span></a>
+      <a href="#" class="g-wide"><img src="assets/images/gallery-6.jpg" alt="Modern Visalia-area home kept comfortable year-round"/><span>Whole-Home Comfort</span></a>
+      <a href="#"><img src="assets/images/gallery-4.jpg" alt="Residential air conditioning unit installation"/><span>Residential AC</span></a>
+      <a href="#"><img src="assets/images/gallery-5.jpg" alt="Technician performing a detailed system inspection"/><span>System Diagnostics</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BOOKING ============ -->
+<section class="booking" id="booking">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">Get Started</div>
+      <h2>Book your free estimate.</h2>
+      <p>Tell us what's going on and Miguel's team will follow up to schedule your visit &mdash; no pressure, no obligation.</p>
+    </div>
+
+    <div class="booking-shell">
+      <div class="booking-side">
+        <div>
+          <div class="eyebrow on-dark">Why book with MG's</div>
+          <h2>Straightforward service, from the first call.</h2>
+          <p>No call centers, no upsells &mdash; just a family business that shows up and does the job right.</p>
+          <div class="booking-perks">
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Free, no-obligation estimates</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Financing options available</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Miguel reviews every job personally</div>
+          </div>
+        </div>
+        <div class="emergency-box">
+          <strong>Need help right now?</strong>
+          <a href="tel:5596232210">559-623-2210</a>
+        </div>
+      </div>
+
+      <form class="booking-form" onsubmit="return false;">
+        <div class="field-row">
+          <div class="field"><label for="name">Full Name</label><input id="name" type="text" placeholder="Jane Rodriguez" required/></div>
+          <div class="field"><label for="phone">Phone Number</label><input id="phone" type="tel" placeholder="(559) 000-0000" required/></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@email.com"/></div>
+          <div class="field"><label for="service">Service Needed</label>
+            <select id="service">
+              <option>AC Repair</option>
+              <option>AC Installation</option>
+              <option>Furnace Repair</option>
+              <option>Furnace Installation</option>
+              <option>Heat Pump Service</option>
+              <option>Mini-Split Installation</option>
+              <option>Ductwork</option>
+              <option>Indoor Air Quality</option>
+              <option>Maintenance / Tune-Up</option>
+              <option>Emergency Service</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field full"><label for="details">Tell us what's going on</label><textarea id="details" placeholder="e.g. AC is blowing warm air, unit is 12 years old..."></textarea></div>
+        </div>
+        <button type="submit" class="btn btn-navy">Request My Free Estimate</button>
+        <p class="form-fineprint">Prototype form &mdash; not yet connected. Prefer to talk now? Call 559-623-2210.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <img src="assets/images/logo-wordmark.png" alt="MG's logo" style="height:32px;"/>
+          <span class="brand-text">MG'S<span>Air Conditioning &amp; Heating</span></span>
+        </a>
+        <p>Family-owned HVAC serving Visalia and the surrounding Central Valley. Owner-operated from the first estimate to the final walkthrough.</p>
+        <div class="footer-social">
+          <a href="https://instagram.com/mgs_air_conditioning_" aria-label="Instagram" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
+          <a href="https://www.facebook.com/mgsair/" aria-label="Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://tiktok.com/@mgsairconditioning" aria-label="TikTok" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></a>
+          <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" aria-label="Yelp" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 2 4 20h16z"/></svg></a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="#services">Air Conditioning</a></li>
+          <li><a href="#services">Furnace &amp; Heating</a></li>
+          <li><a href="#services">Heat Pumps</a></li>
+          <li><a href="#services">Mini-Splits</a></li>
+          <li><a href="#services">Ductwork</a></li>
+          <li><a href="#services">Indoor Air Quality</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#story">Our Story</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#booking">Book an Estimate</a></li>
+          <li><a href="tel:5596232210">Emergency Service</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5596232210">559-623-2210</a></li>
+          <li><a href="mailto:mgsair.office@gmail.com">mgsair.office@gmail.com</a></li>
+          <li>754 N Gateway St, Visalia, CA 93291</li>
+          <li>Mon&ndash;Sat, 8am&ndash;5pm &middot; 24/7 Emergencies</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 MG's Air Conditioning &amp; Heating. License #960470.</span>
+      <span>Serving Visalia, Tulare, Kings, Kern &amp; Fresno Counties.</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
