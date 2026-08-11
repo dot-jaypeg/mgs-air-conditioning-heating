@@ -43,20 +43,21 @@
     --red:#b20606;
     --red-dark:#8a0505;
     --navy:#000080;
-    --navy-deep:#000058;
+    --navy-deep:#00005c;
+    --navy-ink:#05053a;
     --cyan:#0dd9e7;
     --cyan-deep:#08b8c4;
     --off:#fcfcfc;
-    --ink:#12142b;          /* readable near-navy body text */
+    --ink:#12142b;
     --muted:#5b5e78;
-    --line:rgba(0,0,128,0.10);
+    --line:rgba(0,0,128,0.12);
     --card:#ffffff;
-    --radius-lg:28px;
-    --radius-md:18px;
-    --radius-sm:12px;
-    --shadow-soft:0 20px 50px -20px rgba(0,0,50,0.25);
-    --shadow-tight:0 8px 24px -12px rgba(0,0,50,0.28);
-    --container:1180px;
+    --radius-lg:26px;
+    --radius-md:16px;
+    --radius-sm:10px;
+    --shadow-soft:0 24px 60px -24px rgba(0,0,40,0.35);
+    --shadow-tight:0 10px 26px -14px rgba(0,0,40,0.32);
+    --container:1220px;
   }
 
   html, body{ max-width:100%; overflow-x:hidden; }
@@ -71,8 +72,8 @@
   h1,h2,h3,h4{
     font-family:"Suisse Intl","Inter",sans-serif;
     color:var(--navy);
-    line-height:1.05;
-    letter-spacing:-0.02em;
+    line-height:1.02;
+    letter-spacing:-0.025em;
     font-weight:700;
   }
 
@@ -86,50 +87,78 @@
   .eyebrow{
     display:inline-flex; flex-wrap:wrap; align-items:center; gap:8px;
     max-width:100%; box-sizing:border-box;
-    font-size:13px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
-    color:var(--navy);
-    background:rgba(13,217,231,0.14);
-    border:1px solid rgba(13,217,231,0.4);
+    font-size:12.5px; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+    color:var(--red);
+    background:rgba(178,6,6,0.08);
+    border:1.5px solid rgba(178,6,6,0.3);
     padding:7px 16px;
     border-radius:999px;
   }
   .eyebrow.on-dark{
-    color:var(--off);
-    background:rgba(255,255,255,0.12);
-    border-color:rgba(255,255,255,0.28);
+    color:var(--cyan);
+    background:rgba(13,217,231,0.1);
+    border-color:rgba(13,217,231,0.35);
   }
-  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 3px rgba(13,217,231,0.25); }
+  .eyebrow .dot{ width:7px; height:7px; border-radius:50%; background:var(--red); box-shadow:0 0 0 3px rgba(178,6,6,0.22); }
+  .eyebrow.on-dark .dot{ background:var(--cyan); box-shadow:0 0 0 3px rgba(13,217,231,0.25); }
+
+  /* ============ SCROLL REVEAL ============ */
+  .reveal{ opacity:0; transform:translateY(30px); transition:opacity .7s cubic-bezier(.16,.8,.24,1), transform .7s cubic-bezier(.16,.8,.24,1); }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  .reveal.d1.is-visible{ transition-delay:.1s; }
+  .reveal.d2.is-visible{ transition-delay:.2s; }
+  .reveal.d3.is-visible{ transition-delay:.3s; }
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1!important; transform:none!important; transition:none!important; }
+    .marquee-track{ animation:none!important; }
+  }
+
+  /* ============ HOVER LIFT ============ */
+  .lift{ transition:transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease, border-color .3s ease; }
+  .lift:hover{ transform:translateY(-8px); box-shadow:0 0 0 2px var(--cyan), var(--shadow-soft); }
 
   /* ============ BUTTONS ============ */
   .btn{
     display:inline-flex; align-items:center; justify-content:center; gap:10px;
-    padding:16px 30px;
+    padding:17px 32px;
     border-radius:999px;
-    font-weight:600; font-size:15.5px;
-    border:1px solid transparent;
-    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+    font-weight:700; font-size:15.5px;
+    border:2px solid transparent;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
     white-space:nowrap;
+    position:relative;
   }
-  .btn:hover{ transform:translateY(-2px); }
-  .btn-red{ background:var(--red); color:#fff; box-shadow:0 14px 30px -12px rgba(178,6,6,0.55); }
-  .btn-red:hover{ background:var(--red-dark); box-shadow:0 18px 34px -10px rgba(178,6,6,0.6); }
-  .btn-navy{ background:var(--navy); color:#fff; box-shadow:0 14px 30px -12px rgba(0,0,128,0.5); }
-  .btn-navy:hover{ background:var(--navy-deep); }
-  .btn-ghost{ background:rgba(255,255,255,0.08); color:var(--off); border-color:rgba(255,255,255,0.4); }
-  .btn-ghost:hover{ background:rgba(255,255,255,0.16); }
-  .btn-outline{ background:transparent; color:var(--navy); border-color:var(--line); }
-  .btn-outline:hover{ background:rgba(0,0,128,0.05); }
-  .btn-sm{ padding:11px 20px; font-size:14px; }
+  .btn:hover{ transform:translateY(-3px); }
+  .btn-red{ background:var(--red); color:#fff; box-shadow:0 16px 32px -12px rgba(178,6,6,0.6); }
+  .btn-red:hover{ background:var(--red-dark); box-shadow:0 0 0 3px rgba(13,217,231,0.35), 0 18px 34px -10px rgba(178,6,6,0.65); }
+  .btn-navy{ background:var(--navy); color:#fff; box-shadow:0 16px 32px -12px rgba(0,0,128,0.55); }
+  .btn-navy:hover{ background:var(--navy-deep); box-shadow:0 0 0 3px rgba(13,217,231,0.35), 0 18px 34px -10px rgba(0,0,128,0.6); }
+  .btn-ghost{ background:rgba(255,255,255,0.08); color:#fff; border-color:rgba(255,255,255,0.5); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.16); border-color:var(--cyan); }
+  .btn-outline{ background:transparent; color:var(--navy); border-color:var(--navy); }
+  .btn-outline:hover{ background:var(--navy); color:#fff; }
+  .btn-sm{ padding:11px 20px; font-size:14px; border-width:1.5px; }
   .btn svg{ width:18px; height:18px; flex-shrink:0; }
+
+  /* ============ UTILITY BAR ============ */
+  .utility-bar{ background:var(--navy-ink); color:rgba(255,255,255,0.85); }
+  .utility-inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:9px 0; font-size:12.5px; font-weight:600; }
+  .utility-left{ display:flex; align-items:center; gap:22px; flex-wrap:wrap; }
+  .utility-left span{ display:flex; align-items:center; gap:7px; white-space:nowrap; }
+  .utility-left svg{ width:14px; height:14px; color:var(--cyan); flex-shrink:0; }
+  .utility-right a{ display:flex; align-items:center; gap:7px; color:#fff; font-weight:700; }
+  .utility-right svg{ width:14px; height:14px; color:var(--red); flex-shrink:0; }
 
   /* ============ HEADER ============ */
   header{
     position:sticky; top:0; z-index:100;
-    background:rgba(252,252,252,0.86);
+    background:rgba(252,252,252,0.95);
     backdrop-filter:blur(14px);
     -webkit-backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--line);
+    border-bottom:2px solid var(--navy);
+    transition:box-shadow .3s ease;
   }
+  header.is-scrolled{ box-shadow:0 10px 30px -16px rgba(0,0,40,0.35); }
   .nav{
     display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:12px;
     padding:14px 0;
@@ -139,14 +168,17 @@
   .brand-text{ font-family:"Suisse Intl"; font-weight:700; font-size:15px; color:var(--navy); line-height:1.15; white-space:nowrap; }
   .brand-text span{ display:block; font-family:"Inter"; font-weight:500; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); }
 
-  .nav-links{
-    display:flex; align-items:center; gap:34px; flex-wrap:wrap;
-  }
+  .nav-links{ display:flex; align-items:center; gap:32px; flex-wrap:wrap; }
   .nav-links a{
-    font-size:14.5px; font-weight:500; color:var(--ink);
+    font-size:14.5px; font-weight:600; color:var(--ink); position:relative; padding-bottom:4px;
     transition:color .15s ease;
   }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; right:100%; bottom:0; height:2px; background:var(--red);
+    transition:right .25s ease;
+  }
   .nav-links a:hover{ color:var(--navy); }
+  .nav-links a:hover::after{ right:0; }
 
   .nav-cta{ display:flex; align-items:center; gap:14px; flex-shrink:0; }
   .nav-phone{ display:flex; flex-direction:column; text-align:right; }
@@ -157,190 +189,238 @@
 
   /* ============ HERO ============ */
   .hero{
-    position:relative;
-    overflow:hidden;
-    padding:76px 0 90px;
-    background:
-      radial-gradient(1200px 500px at 15% -10%, rgba(13,217,231,0.16), transparent 60%),
-      radial-gradient(900px 500px at 100% 0%, rgba(0,0,128,0.10), transparent 55%),
-      var(--off);
+    position:relative; overflow:hidden;
+    min-height:min(860px, 94vh);
+    display:flex; align-items:center;
+    padding:64px 0 60px;
   }
-  .blob{ position:absolute; border-radius:50%; filter:blur(70px); opacity:0.55; z-index:0; pointer-events:none; }
-  .blob-1{ width:420px; height:420px; background:var(--cyan); top:-160px; left:-120px; }
-  .blob-2{ width:360px; height:360px; background:var(--navy); bottom:-140px; right:-80px; opacity:0.18; }
-
-  .hero-grid{
-    position:relative; z-index:1;
-    display:grid; grid-template-columns:minmax(0,1.05fr) minmax(0,0.95fr); gap:56px; align-items:center;
+  .hero-media{ position:absolute; inset:0; z-index:0; }
+  .hero-media img{ width:100%; height:100%; object-fit:cover; }
+  .hero-overlay{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(185deg, rgba(0,0,50,0.82) 0%, rgba(0,0,70,0.6) 45%, rgba(0,0,90,0.92) 100%),
+      linear-gradient(110deg, rgba(0,0,128,0.55) 0%, rgba(178,6,6,0.12) 55%, transparent 85%);
+  }
+  .hero-inner{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr); gap:56px; align-items:start; width:100%;
   }
   .hero h1{
-    font-size:clamp(38px, 5.4vw, 62px);
+    color:#fff;
+    font-size:clamp(42px, 7vw, 92px);
+    line-height:0.98;
     margin:20px 0 22px;
   }
-  .hero h1 em{
-    font-style:normal;
-    background:linear-gradient(100deg, var(--red) 0%, var(--navy) 100%);
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
+  .hero h1 .hl{ color:var(--cyan); }
   .hero p.lead{
-    font-size:18px; color:var(--muted); max-width:520px; margin-bottom:34px;
+    font-size:18.5px; color:rgba(255,255,255,0.86); max-width:540px; margin-bottom:32px;
   }
-  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:38px; max-width:100%; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:36px; max-width:100%; }
 
-  .hero-trust{ display:flex; flex-wrap:wrap; gap:18px 26px; max-width:100%; }
-  .hero-trust div{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:600; color:var(--navy); min-width:0; }
-  .hero-trust svg{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; }
+  .hero-trust{ display:flex; flex-wrap:wrap; gap:16px 28px; max-width:100%; }
+  .hero-trust div{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:700; color:#fff; min-width:0; }
+  .hero-trust div span{ min-width:0; }
+  .hero-trust svg{ width:20px; height:20px; color:var(--cyan); flex-shrink:0; }
 
-  .hero-visual{ position:relative; }
-  .hero-photo{
-    border-radius:var(--radius-lg);
-    overflow:hidden;
-    box-shadow:var(--shadow-soft);
-    aspect-ratio:4/4.6;
-    position:relative;
+  .quote-card{
+    background:#fff; border-radius:var(--radius-lg); padding:34px;
+    box-shadow:0 34px 80px -20px rgba(0,0,20,0.55);
   }
-  .hero-photo img{ width:100%; height:100%; object-fit:cover; }
-  .hero-photo::after{
-    content:""; position:absolute; inset:0;
-    background:linear-gradient(200deg, rgba(0,0,128,0.32), rgba(13,217,231,0.10) 55%, rgba(0,0,0,0) 80%);
+  .quote-card .badge{
+    display:inline-block; background:rgba(178,6,6,0.1); color:var(--red);
+    font-weight:700; font-size:11.5px; letter-spacing:.06em; text-transform:uppercase;
+    padding:6px 13px; border-radius:999px; margin-bottom:16px;
   }
-  .float-card{
-    position:absolute; background:#fff; border-radius:var(--radius-md);
-    box-shadow:var(--shadow-tight); padding:16px 18px;
-    display:flex; align-items:center; gap:12px;
+  .quote-card h3{ font-size:22px; margin-bottom:6px; }
+  .quote-card > p{ font-size:13.5px; color:var(--muted); margin-bottom:20px; }
+  .quote-card .field{ margin-bottom:13px; }
+  .quote-card .field label{ font-size:12.5px; font-weight:700; color:var(--navy); display:block; margin-bottom:6px; }
+  .quote-card .field input, .quote-card .field select{
+    width:100%; font:inherit; font-size:14.5px; padding:12px 14px; border-radius:11px;
+    border:1.5px solid rgba(0,0,128,0.15); background:var(--off); color:var(--ink); outline:none;
+    transition:border-color .15s ease;
   }
-  .float-card.emergency{ top:26px; left:-26px; }
-  .float-card.emergency .ic{ background:var(--red); }
-  .float-card.owner{ bottom:30px; right:-26px; }
-  .float-card.owner .ic{ background:var(--navy); }
-  .float-card .ic{
-    width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0;
-  }
-  .float-card .ic svg{ width:20px; height:20px; color:#fff; }
-  .float-card strong{ display:block; font-size:14px; color:var(--navy); }
-  .float-card span{ font-size:12px; color:var(--muted); }
+  .quote-card .field input:focus, .quote-card .field select:focus{ border-color:var(--cyan-deep); }
+  .quote-card .btn{ width:100%; margin-top:6px; }
+  .quote-card .fine{ font-size:11.5px; color:var(--muted); text-align:center; margin-top:12px; }
 
-  /* ============ TRUST BAR ============ */
-  .trust-bar{ background:var(--navy); color:#fff; padding:26px 0; }
-  .trust-bar .wrap{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:20px; }
-  .trust-item{ display:flex; align-items:center; gap:12px; flex:1 1 200px; }
-  .trust-item svg{ width:26px; height:26px; color:var(--cyan); flex-shrink:0; }
-  .trust-item strong{ display:block; font-size:15px; font-weight:700; }
-  .trust-item span{ font-size:12.5px; color:rgba(255,255,255,0.65); }
+  /* ============ MARQUEE ============ */
+  .marquee{ overflow:hidden; background:var(--navy); padding:16px 0; border-top:2px solid var(--navy-ink); border-bottom:2px solid var(--navy-ink); }
+  .marquee-track{ display:flex; width:max-content; gap:36px; animation:marquee 26s linear infinite; will-change:transform; }
+  .marquee-track span{ font-family:"Suisse Intl"; font-weight:700; font-size:14.5px; letter-spacing:0.05em; color:#fff; white-space:nowrap; text-transform:uppercase; }
+  .marquee-track .sep{ color:var(--red); font-weight:700; }
+  @keyframes marquee{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
 
   /* ============ SECTION SHELL ============ */
-  section{ padding:96px 0; }
-  .section-head{ max-width:640px; margin-bottom:56px; }
+  section{ padding:100px 0; }
+  .section-head{ max-width:660px; margin-bottom:56px; }
   .section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
-  .section-head h2{ font-size:clamp(30px,4vw,42px); margin:16px 0 14px; }
+  .section-head h2{ font-size:clamp(32px,4.4vw,48px); margin:16px 0 14px; }
   .section-head p{ color:var(--muted); font-size:16.5px; }
 
   /* ============ SERVICES ============ */
   .services-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
   .service-card{
-    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
-    padding:30px 26px; transition:transform .2s ease, box-shadow .2s ease;
+    background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md);
+    padding:32px 28px;
     display:flex; flex-direction:column; gap:16px;
   }
-  .service-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-tight); }
   .service-icon{
-    width:52px; height:52px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+    width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center;
+    background:var(--navy); flex-shrink:0;
   }
-  .service-icon svg{ width:26px; height:26px; }
-  .service-card.cool .service-icon{ background:rgba(13,217,231,0.16); }
-  .service-card.cool .service-icon svg{ color:var(--cyan-deep); }
-  .service-card.heat .service-icon{ background:rgba(178,6,6,0.12); }
-  .service-card.heat .service-icon svg{ color:var(--red); }
-  .service-card.neutral .service-icon{ background:rgba(0,0,128,0.10); }
-  .service-card.neutral .service-icon svg{ color:var(--navy); }
-  .service-card h3{ font-size:19px; }
+  .service-icon svg{ width:28px; height:28px; color:#fff; }
+  .service-card.heat .service-icon{ background:var(--red); }
+  .service-card h3{ font-size:20px; }
   .service-card p{ color:var(--muted); font-size:14.5px; }
   .service-card ul{ display:flex; flex-direction:column; gap:7px; margin-top:2px; }
   .service-card ul li{ font-size:13.5px; color:var(--ink); display:flex; align-items:center; gap:8px; }
-  .service-card ul li::before{ content:""; width:5px; height:5px; border-radius:50%; background:var(--cyan-deep); flex-shrink:0; }
-  .service-card.heat ul li::before{ background:var(--red); }
-  .service-card.neutral ul li::before{ background:var(--navy); }
+  .service-card ul li::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--red); flex-shrink:0; }
+  .service-card.heat ul li::before{ background:var(--navy); }
 
-  .services-note{
-    margin-top:34px; text-align:center; color:var(--muted); font-size:14.5px;
+  .services-note{ margin-top:34px; text-align:center; color:var(--muted); font-size:14.5px; }
+
+  /* ============ CERTIFICATIONS ============ */
+  .cert-strip{ padding:64px 0; background:var(--navy-ink); }
+  .cert-strip .section-head h2, .cert-strip .section-head p{ color:#fff; }
+  .cert-strip .section-head p{ color:rgba(255,255,255,0.65); }
+  .cert-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+  .cert-card{
+    background:rgba(255,255,255,0.05); border:1.5px solid rgba(255,255,255,0.14); border-radius:var(--radius-md);
+    padding:26px 24px; display:flex; flex-direction:column; gap:10px;
   }
+  .cert-card .service-icon{ width:44px; height:44px; border-radius:13px; background:rgba(13,217,231,0.16); }
+  .cert-card .service-icon svg{ width:22px; height:22px; color:var(--cyan); }
+  .cert-card h4{ font-size:15.5px; color:#fff; }
+  .cert-card p{ font-size:13.5px; color:rgba(255,255,255,0.62); line-height:1.55; }
+  .cert-card p a{ font-weight:700; color:var(--cyan); text-decoration:underline; }
+
+  /* ============ THE MG'S STANDARD ============ */
+  .standard{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
+  .standard .section-head h2{ color:#fff; }
+  .standard .section-head p{ color:rgba(255,255,255,0.7); }
+  .compare-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+  .compare-card{ border-radius:var(--radius-lg); padding:36px; }
+  .compare-card.bad{ background:rgba(178,6,6,0.16); border:1.5px solid rgba(178,6,6,0.4); }
+  .compare-card.good{ background:rgba(13,217,231,0.12); border:1.5px solid rgba(13,217,231,0.4); }
+  .compare-card h3{ color:#fff; font-size:19px; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .compare-card h3 svg{ width:22px; height:22px; flex-shrink:0; }
+  .compare-card ul{ display:flex; flex-direction:column; gap:14px; }
+  .compare-card li{ display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:rgba(255,255,255,0.88); }
+  .compare-card li svg{ width:18px; height:18px; flex-shrink:0; margin-top:2px; }
+  .compare-card li span{ min-width:0; }
+  .compare-card.bad svg{ color:var(--red); }
+  .compare-card.good svg{ color:var(--cyan); }
 
   /* ============ OUR STORY ============ */
   .story{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
   .story::before{
     content:""; position:absolute; width:520px; height:520px; border-radius:50%;
-    background:var(--cyan); opacity:0.14; filter:blur(90px); top:-200px; right:-160px;
+    background:var(--cyan); opacity:0.12; filter:blur(90px); top:-200px; right:-160px;
   }
   .story-grid{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:64px; align-items:center; }
   .avatar-badge{
     width:104px; height:104px; border-radius:50%;
-    background:linear-gradient(135deg, var(--cyan), var(--navy-deep));
+    background:var(--red);
     display:flex; align-items:center; justify-content:center;
     font-family:"Suisse Intl"; font-weight:700; font-size:32px; color:#fff;
-    box-shadow:0 20px 40px -14px rgba(13,217,231,0.5);
+    box-shadow:0 20px 40px -14px rgba(178,6,6,0.55);
     margin-bottom:26px;
   }
   .story-card{
     background:rgba(255,255,255,0.06);
-    border:1px solid rgba(255,255,255,0.14);
+    border:1.5px solid rgba(255,255,255,0.16);
     border-radius:var(--radius-lg);
     padding:44px;
   }
   .story-card h2{ color:#fff; font-size:clamp(26px,3.4vw,34px); margin-bottom:18px; }
-  .story-card .quote{
-    font-size:18px; line-height:1.65; color:rgba(255,255,255,0.88); margin-bottom:22px;
-  }
+  .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(255,255,255,0.88); margin-bottom:22px; }
   .story-card .sign{ font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(255,255,255,0.6); margin-top:2px; }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
-  .stat-tile{ background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); border-radius:var(--radius-md); padding:24px; }
-  .stat-tile strong{ display:block; font-family:"Suisse Intl"; font-size:30px; color:var(--cyan); margin-bottom:6px; }
+  .stat-tile{ background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.16); border-radius:var(--radius-md); padding:24px; }
+  .stat-tile strong{ display:block; font-family:"Suisse Intl"; font-size:32px; color:var(--cyan); margin-bottom:6px; }
   .stat-tile span{ font-size:13.5px; color:rgba(255,255,255,0.72); }
 
   /* ============ GALLERY ============ */
-  .gallery-grid{
-    display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:150px; gap:16px;
+  .gallery-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:150px; gap:16px; }
+  .gallery-grid a{
+    position:relative; border-radius:var(--radius-md); overflow:hidden; display:block;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
   }
-  .gallery-grid a{ position:relative; border-radius:var(--radius-md); overflow:hidden; display:block; }
-  .gallery-grid img{ width:100%; height:100%; object-fit:cover; transition:transform .4s ease; }
-  .gallery-grid a:hover img{ transform:scale(1.06); }
+  .gallery-grid a:hover{ transform:translateY(-6px); box-shadow:0 0 0 2px var(--cyan), var(--shadow-soft); z-index:2; }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
+  .gallery-grid a:hover img{ transform:scale(1.08); }
   .gallery-grid a::after{
     content:""; position:absolute; inset:0;
-    background:linear-gradient(180deg, transparent 55%, rgba(0,0,50,0.55));
+    background:linear-gradient(180deg, transparent 50%, rgba(0,0,50,0.65));
     opacity:0; transition:opacity .25s ease;
   }
   .gallery-grid a:hover::after{ opacity:1; }
   .gallery-grid span{
-    position:absolute; left:16px; bottom:14px; color:#fff; font-size:13px; font-weight:600;
+    position:absolute; left:16px; bottom:14px; color:#fff; font-size:13px; font-weight:700;
     opacity:0; transform:translateY(6px); transition:all .25s ease; z-index:1;
   }
   .gallery-grid a:hover span{ opacity:1; transform:translateY(0); }
   .g-tall{ grid-row:span 2; }
   .g-wide{ grid-column:span 2; }
 
+  /* ============ REVIEWS ============ */
+  .reviews{ background:var(--navy-ink); }
+  .reviews-banner{ text-align:center; }
+  .reviews-banner .section-head{ margin:0 auto 30px; }
+  .reviews-banner .section-head h2{ color:#fff; }
+  .reviews-banner .section-head p{ color:rgba(255,255,255,0.65); }
+  .reviews-links{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+  /* ============ SERVICE AREA ============ */
+  .area-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:center; }
+  .area-list{ display:flex; flex-direction:column; gap:16px; margin:26px 0 32px; }
+  .area-list div{ display:flex; align-items:center; gap:12px; font-size:15px; color:var(--ink); font-weight:700; }
+  .area-list div span{ min-width:0; }
+  .area-list svg{ width:20px; height:20px; color:var(--red); flex-shrink:0; }
+  .area-map{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
+  .area-ring{ position:absolute; border:1.5px dashed rgba(0,0,128,0.25); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .area-ring.r1{ width:100%; height:100%; }
+  .area-ring.r2{ width:68%; height:68%; }
+  .area-ring.r3{ width:36%; height:36%; border-style:solid; border-color:var(--red); background:rgba(178,6,6,0.1); }
+  .area-pin{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; }
+  .area-pin .dot{ width:16px; height:16px; border-radius:50%; background:var(--red); box-shadow:0 0 0 6px rgba(178,6,6,0.2); animation:pulse-dot 2.4s ease-in-out infinite; }
+  @keyframes pulse-dot{ 0%,100%{ box-shadow:0 0 0 6px rgba(178,6,6,0.2); } 50%{ box-shadow:0 0 0 11px rgba(178,6,6,0.08); } }
+  .area-pin span{ font-family:"Suisse Intl"; font-weight:700; font-size:12.5px; color:var(--navy); background:#fff; padding:5px 12px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
+  .area-county{ position:absolute; font-size:12.5px; font-weight:700; color:var(--navy); background:#fff; padding:6px 13px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; border:1.5px solid var(--line); }
+  .area-county.n{ top:0; left:50%; transform:translate(-50%,-50%); }
+  .area-county.w{ top:50%; left:0; transform:translate(-50%,-50%); }
+  .area-county.s{ bottom:0; left:50%; transform:translate(-50%,50%); }
+
+  /* ============ FAQ ============ */
+  .faq-list{ display:flex; flex-direction:column; gap:14px; max-width:760px; margin:0 auto; }
+  .faq-item{ background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md); overflow:hidden; transition:border-color .2s ease; }
+  .faq-item[open]{ border-color:var(--navy); }
+  .faq-item summary{ list-style:none; cursor:pointer; padding:22px 26px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::marker{ display:none; content:""; }
+  .faq-q{ min-width:0; flex:1; font-family:"Suisse Intl"; font-weight:700; font-size:16px; color:var(--navy); }
+  .faq-item .chevron{ width:20px; height:20px; color:var(--red); flex-shrink:0; transition:transform .2s ease; }
+  .faq-item[open] .chevron{ transform:rotate(180deg); }
+  .faq-item .faq-a{ padding:0 26px 22px; color:var(--muted); font-size:14.5px; line-height:1.6; }
+
   /* ============ BOOKING ============ */
-  .booking{
-    background:linear-gradient(160deg, rgba(13,217,231,0.10), rgba(0,0,128,0.05));
-  }
+  .booking{ background:var(--off); position:relative; }
   .booking-shell{
     display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.05fr); gap:0;
     background:#fff; border-radius:var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-soft);
-    border:1px solid var(--line);
+    border:2px solid var(--navy);
   }
-  .booking-side{
-    background:var(--navy); color:#fff; padding:52px 44px;
-    display:flex; flex-direction:column; justify-content:space-between;
-  }
+  .booking-side{ background:var(--navy); color:#fff; padding:52px 44px; display:flex; flex-direction:column; justify-content:space-between; }
   .booking-side h2{ color:#fff; font-size:clamp(26px,3vw,32px); margin:14px 0 16px; }
   .booking-side p{ color:rgba(255,255,255,0.72); font-size:15px; margin-bottom:30px; }
   .booking-perks{ display:flex; flex-direction:column; gap:16px; margin-bottom:36px; }
   .booking-perks div{ display:flex; align-items:center; gap:12px; font-size:14.5px; }
   .booking-perks svg{ width:20px; height:20px; color:var(--cyan); flex-shrink:0; }
-  .emergency-box{
-    background:rgba(178,6,6,0.22); border:1px solid rgba(178,6,6,0.5);
-    border-radius:var(--radius-md); padding:20px 22px;
-  }
+  .emergency-box{ background:rgba(178,6,6,0.28); border:1.5px solid var(--red); border-radius:var(--radius-md); padding:20px 22px; }
   .emergency-box strong{ display:block; font-size:14.5px; margin-bottom:4px; }
   .emergency-box a{ font-family:"Suisse Intl"; font-size:22px; font-weight:700; color:var(--cyan); }
 
@@ -348,7 +428,7 @@
   .field-row{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:16px; margin-bottom:16px; }
   .field{ display:flex; flex-direction:column; gap:7px; }
   .field.full{ grid-column:1 / -1; }
-  .field label{ font-size:13px; font-weight:600; color:var(--navy); }
+  .field label{ font-size:13px; font-weight:700; color:var(--navy); }
   .field input, .field select, .field textarea{
     font:inherit; font-size:14.5px; padding:13px 15px; border-radius:12px;
     border:1.5px solid rgba(0,0,128,0.15); background:var(--off); color:var(--ink);
@@ -359,6 +439,21 @@
   .booking-form .btn{ width:100%; margin-top:8px; }
   .form-fineprint{ font-size:12px; color:var(--muted); margin-top:14px; text-align:center; }
 
+  /* ============ RESOURCES ============ */
+  .resources-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+  .resource-card{
+    background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md);
+    padding:28px; position:relative; display:flex; flex-direction:column; gap:12px;
+  }
+  .resource-badge{
+    position:absolute; top:20px; right:20px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--red); background:rgba(178,6,6,0.08); padding:5px 10px; border-radius:999px;
+  }
+  .resource-card .service-icon{ background:rgba(13,217,231,0.14); }
+  .resource-card .service-icon svg{ color:var(--cyan-deep); }
+  .resource-card h4{ font-size:16.5px; color:var(--navy); padding-right:80px; }
+  .resource-card p{ font-size:14px; color:var(--muted); }
+
   /* ============ FOOTER ============ */
   footer{ background:#05052b; color:rgba(255,255,255,0.75); padding:70px 0 30px; }
   .footer-grid{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr); gap:40px; margin-bottom:50px; }
@@ -368,15 +463,15 @@
   .footer-social{ display:flex; gap:10px; }
   .footer-social a{
     width:38px; height:38px; border-radius:50%; background:rgba(255,255,255,0.08);
-    display:flex; align-items:center; justify-content:center; transition:background .15s ease;
+    display:flex; align-items:center; justify-content:center; transition:background .2s ease, transform .2s ease;
   }
-  .footer-social a:hover{ background:var(--cyan); }
+  .footer-social a:hover{ background:var(--red); transform:translateY(-3px); }
   .footer-social svg{ width:17px; height:17px; }
 
   footer h4{ color:#fff; font-size:14px; margin-bottom:20px; letter-spacing:0.04em; text-transform:uppercase; }
   .footer-col ul{ display:flex; flex-direction:column; gap:12px; }
   .footer-col a, .footer-col li{ font-size:14px; color:rgba(255,255,255,0.6); }
-  .footer-col a:hover{ color:#fff; }
+  .footer-col a:hover{ color:var(--cyan); }
 
   .footer-bottom{
     border-top:1px solid rgba(255,255,255,0.1); padding-top:26px;
@@ -384,97 +479,9 @@
     font-size:12.5px; color:rgba(255,255,255,0.4);
   }
 
-  /* ============ CERTIFICATIONS ============ */
-  .cert-strip{ padding:64px 0; }
-  .cert-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
-  .cert-card{
-    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
-    padding:26px 24px; display:flex; flex-direction:column; gap:10px;
-  }
-  .cert-card .service-icon{ width:44px; height:44px; border-radius:14px; }
-  .cert-card .service-icon svg{ width:22px; height:22px; }
-  .cert-card h4{ font-size:15.5px; color:var(--navy); }
-  .cert-card p{ font-size:13.5px; color:var(--muted); line-height:1.55; }
-  .cert-card p a{ font-weight:600; color:var(--cyan-deep); text-decoration:underline; }
-
-  /* ============ THE MG'S STANDARD ============ */
-  .standard{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
-  .standard .section-head h2{ color:#fff; }
-  .standard .section-head p{ color:rgba(255,255,255,0.7); }
-  .compare-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
-  .compare-card{ border-radius:var(--radius-lg); padding:36px; }
-  .compare-card.bad{ background:rgba(178,6,6,0.14); border:1px solid rgba(178,6,6,0.35); }
-  .compare-card.good{ background:rgba(13,217,231,0.12); border:1px solid rgba(13,217,231,0.35); }
-  .compare-card h3{ color:#fff; font-size:19px; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
-  .compare-card h3 svg{ width:22px; height:22px; flex-shrink:0; }
-  .compare-card ul{ display:flex; flex-direction:column; gap:14px; }
-  .compare-card li{ display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:rgba(255,255,255,0.85); }
-  .compare-card li svg{ width:18px; height:18px; flex-shrink:0; margin-top:2px; }
-  .compare-card li span{ min-width:0; }
-  .compare-card.bad svg{ color:var(--red); }
-  .compare-card.good svg{ color:var(--cyan); }
-
-  /* ============ REVIEWS ============ */
-  .reviews-banner{
-    background:linear-gradient(135deg, rgba(13,217,231,0.14), rgba(0,0,128,0.06));
-    border:1px solid var(--line); border-radius:var(--radius-lg);
-    padding:56px; text-align:center;
-  }
-  .reviews-banner .section-head{ margin:0 auto 30px; }
-  .reviews-links{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
-
-  /* ============ SERVICE AREA ============ */
-  .area-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:center; }
-  .area-list{ display:flex; flex-direction:column; gap:16px; margin:26px 0 32px; }
-  .area-list div{ display:flex; align-items:center; gap:12px; font-size:15px; color:var(--ink); font-weight:600; }
-  .area-list div span{ min-width:0; }
-  .area-list svg{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; }
-  .area-map{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
-  .area-ring{ position:absolute; border:1.5px dashed rgba(0,0,128,0.22); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
-  .area-ring.r1{ width:100%; height:100%; }
-  .area-ring.r2{ width:68%; height:68%; }
-  .area-ring.r3{ width:36%; height:36%; border-style:solid; background:rgba(13,217,231,0.14); }
-  .area-pin{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; }
-  .area-pin .dot{ width:16px; height:16px; border-radius:50%; background:var(--red); box-shadow:0 0 0 6px rgba(178,6,6,0.18); }
-  .area-pin span{ font-family:"Suisse Intl"; font-weight:700; font-size:12.5px; color:var(--navy); background:#fff; padding:5px 12px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
-  .area-county{ position:absolute; font-size:12.5px; font-weight:600; color:var(--navy); background:#fff; padding:6px 13px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
-  .area-county.n{ top:0; left:50%; transform:translate(-50%,-50%); }
-  .area-county.w{ top:50%; left:0; transform:translate(-50%,-50%); }
-  .area-county.s{ bottom:0; left:50%; transform:translate(-50%,50%); }
-
-  /* ============ FAQ ============ */
-  .faq-list{ display:flex; flex-direction:column; gap:14px; max-width:760px; margin:0 auto; }
-  .faq-item{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden; }
-  .faq-item summary{
-    list-style:none; cursor:pointer; padding:22px 26px;
-    display:flex; align-items:center; justify-content:space-between; gap:16px;
-  }
-  .faq-item summary::-webkit-details-marker{ display:none; }
-  .faq-item summary::marker{ display:none; content:""; }
-  .faq-q{ min-width:0; flex:1; font-family:"Suisse Intl"; font-weight:700; font-size:16px; color:var(--navy); }
-  .faq-item .chevron{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; transition:transform .2s ease; }
-  .faq-item[open] .chevron{ transform:rotate(180deg); }
-  .faq-item .faq-a{ padding:0 26px 22px; color:var(--muted); font-size:14.5px; line-height:1.6; }
-
-  /* ============ RESOURCES ============ */
-  .resources-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
-  .resource-card{
-    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
-    padding:28px; position:relative; display:flex; flex-direction:column; gap:12px;
-  }
-  .resource-badge{
-    position:absolute; top:20px; right:20px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
-    color:var(--muted); background:rgba(0,0,128,0.06); padding:5px 10px; border-radius:999px;
-  }
-  .resource-card .service-icon{ background:rgba(13,217,231,0.16); }
-  .resource-card .service-icon svg{ color:var(--cyan-deep); }
-  .resource-card h4{ font-size:16.5px; color:var(--navy); padding-right:80px; }
-  .resource-card p{ font-size:14px; color:var(--muted); }
-
   /* ============ RESPONSIVE ============ */
   @media (max-width: 980px){
-    .hero-grid{ grid-template-columns:1fr; }
-    .hero-visual{ order:-1; max-width:420px; margin:0 auto; }
+    .hero-inner{ grid-template-columns:1fr; }
     .story-grid{ grid-template-columns:1fr; }
     .booking-shell{ grid-template-columns:1fr; }
     .services-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
@@ -486,6 +493,7 @@
     .area-grid{ grid-template-columns:1fr; }
     .area-map{ max-width:320px; }
     .resources-grid{ grid-template-columns:1fr; }
+    .utility-left span.hide-sm{ display:none; }
   }
 
   @media (max-width: 720px){
@@ -496,6 +504,7 @@
       flex-direction:column; align-items:flex-start; gap:0; padding:8px 24px 18px;
     }
     .nav-links a{ padding:12px 0; width:100%; border-bottom:1px solid var(--line); }
+    .nav-links a::after{ display:none; }
     .nav-toggle:checked ~ .nav-links{ display:flex; }
     .nav-toggle-label{
       display:flex; align-items:center; justify-content:center;
@@ -507,19 +516,33 @@
     .field-row{ grid-template-columns:1fr; }
     .services-grid{ grid-template-columns:1fr; }
     .footer-grid{ grid-template-columns:1fr; gap:34px; }
-    .trust-bar .wrap{ flex-direction:column; }
-    .float-card{ display:none; }
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
     .gallery-grid{ grid-auto-rows:130px; }
     .cert-grid{ grid-template-columns:1fr; }
-    .reviews-banner{ padding:36px 22px; }
     .resource-card h4{ padding-right:0; }
     .resource-badge{ position:static; display:inline-block; margin-bottom:4px; }
+    .hero{ padding-top:32px; }
+    .hero h1{ font-size:clamp(36px,10vw,48px); }
+    .utility-right span.hide-xs{ display:none; }
+    .quote-card{ padding:26px; }
   }
 </style>
 </head>
 <body>
+
+<!-- ============ UTILITY BAR ============ -->
+<div class="utility-bar">
+  <div class="wrap utility-inner">
+    <div class="utility-left">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Mon&ndash;Sat 8am&ndash;5pm &middot; 24/7 Emergency</span>
+      <span class="hide-sm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg>Serving Visalia &amp; the Central Valley</span>
+    </div>
+    <div class="utility-right">
+      <a href="tel:5596232210"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>559-623-2210</a>
+    </div>
+  </div>
+</div>
 
 <!-- ============ HEADER ============ -->
 <header>
@@ -556,69 +579,72 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
-  <div class="blob blob-1"></div>
-  <div class="blob blob-2"></div>
-  <div class="wrap hero-grid">
-    <div>
-      <div class="eyebrow"><span class="dot"></span> Visalia, CA &middot; Serving Tulare, Kings, Kern &amp; Fresno Counties</div>
-      <h1>Comfort that shows up &mdash; <em>day or night.</em></h1>
+  <div class="hero-media">
+    <img src="assets/images/hero-dramatic.jpg" alt="Close-up of an HVAC condenser unit installed by MG's Air Conditioning & Heating" />
+    <div class="hero-overlay"></div>
+  </div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy reveal">
+      <div class="eyebrow on-dark"><span class="dot"></span> Visalia, CA &middot; Serving Tulare, Kings, Kern &amp; Fresno Counties</div>
+      <h1>Comfort that shows up<br><span class="hl">&mdash; day or night.</span></h1>
       <p class="lead">MG's is a family-owned HVAC company built on one idea: the owner shows up. Miguel personally oversees every estimate, install, and walkthrough &mdash; no salespeople, no pressure, no passing you around.</p>
       <div class="hero-actions">
         <a href="tel:5596232210" class="btn btn-red">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           Call 559-623-2210
         </a>
-        <a href="#booking" class="btn btn-outline">Book a Free Estimate</a>
+        <a href="#booking" class="btn btn-ghost">Book a Free Estimate</a>
       </div>
       <div class="hero-trust">
-        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg>Licensed &amp; Insured &middot; #960470</div>
-        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>24/7 Emergency Line</div>
-        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Family-Owned &amp; Operated</div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg><span>Licensed &amp; Insured &middot; #960470</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>24/7 Emergency Line</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Family-Owned &amp; Operated</span></div>
       </div>
     </div>
 
-    <div class="hero-visual">
-      <div class="hero-photo">
-        <img src="assets/images/hero-home.jpg" alt="Modern home comfortably cooled and heated by MG's Air Conditioning & Heating" />
+    <div class="quote-card reveal d2">
+      <div class="badge">Free &middot; No Obligation</div>
+      <h3>Get a fast, free estimate</h3>
+      <p>Tell us what's going on &mdash; Miguel's team follows up to schedule your visit.</p>
+      <div class="field"><label for="hero-name">Full Name</label><input id="hero-name" type="text" placeholder="Jane Rodriguez"/></div>
+      <div class="field"><label for="hero-phone">Phone Number</label><input id="hero-phone" type="tel" placeholder="(559) 000-0000"/></div>
+      <div class="field"><label for="hero-service">Service Needed</label>
+        <select id="hero-service">
+          <option>AC Repair</option>
+          <option>AC Installation</option>
+          <option>Furnace Repair</option>
+          <option>Heat Pump Service</option>
+          <option>Mini-Split Installation</option>
+          <option>Emergency Service</option>
+          <option>Other</option>
+        </select>
       </div>
-      <div class="float-card emergency">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 11-14h-7l1-6z"/></svg></div>
-        <div><strong>Fast Response</strong><span>Emergencies handled same-day</span></div>
-      </div>
-      <div class="float-card owner">
-        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
-        <div><strong>Miguel Guerra</strong><span>On every job, start to finish</span></div>
-      </div>
+      <a href="#booking" class="btn btn-red">Request Callback &rarr;</a>
+      <p class="fine">Or just call 559-623-2210 &mdash; a real person picks up.</p>
     </div>
   </div>
 </section>
 
-<!-- ============ TRUST BAR ============ -->
-<div class="trust-bar">
-  <div class="wrap">
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-      <div><strong>Family-Owned</strong><span>Since day one, no franchise</span></div>
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-      <div><strong>No High-Pressure Sales</strong><span>Honest quotes, every time</span></div>
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-      <div><strong>4 Counties Served</strong><span>Tulare, Kings, Kern &amp; Fresno</span></div>
-    </div>
-    <div class="trust-item">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>
-      <div><strong>Financing Available</strong><span>Plus free, no-obligation estimates</span></div>
-    </div>
+<!-- ============ MARQUEE ============ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>24/7 Emergency Service</span><span class="sep">&#9679;</span>
+    <span>Family Owned &amp; Operated</span><span class="sep">&#9679;</span>
+    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9679;</span>
+    <span>Free Estimates, No Pressure</span><span class="sep">&#9679;</span>
+    <span>Financing Available</span><span class="sep">&#9679;</span>
+    <span>24/7 Emergency Service</span><span class="sep">&#9679;</span>
+    <span>Family Owned &amp; Operated</span><span class="sep">&#9679;</span>
+    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9679;</span>
+    <span>Free Estimates, No Pressure</span><span class="sep">&#9679;</span>
+    <span>Financing Available</span><span class="sep">&#9679;</span>
   </div>
 </div>
 
 <!-- ============ SERVICES ============ -->
 <section id="services">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow">What We Do</div>
       <h2>Full-service HVAC, all under one roof.</h2>
       <p>From a struggling AC in July to a furnace tune-up before winter, MG's handles installation, repair, and maintenance across every major system &mdash; residential and commercial.</p>
@@ -626,7 +652,7 @@
 
     <div class="services-grid">
 
-      <div class="service-card cool">
+      <div class="service-card lift reveal">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1M2 12h20"/></svg></div>
         <h3>Air Conditioning</h3>
         <p>Keep Valley summers under control with a system sized right for your home.</p>
@@ -637,7 +663,7 @@
         </ul>
       </div>
 
-      <div class="service-card heat">
+      <div class="service-card heat lift reveal d1">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.38 0 2-1 2-2 0-1.5-2-2-2-3.5 0-1 .5-2 1.5-2 .5 1 1.5 1.5 1.5 3a4 4 0 0 1-8 0c0-2.5 2-3.5 2-6 0-1.5-.5-2.5-1-3 3 0 6 2.5 6 7a6 6 0 0 1-6 6 6 6 0 0 1-6-6c0-3 1.5-4.5 3-6"/></svg></div>
         <h3>Furnace &amp; Heating</h3>
         <p>Dependable heat when the Valley fog rolls in, from tune-ups to full replacements.</p>
@@ -648,7 +674,7 @@
         </ul>
       </div>
 
-      <div class="service-card heat">
+      <div class="service-card heat lift reveal d2">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
         <h3>Heat Pumps</h3>
         <p>One efficient system for year-round heating and cooling.</p>
@@ -659,7 +685,7 @@
         </ul>
       </div>
 
-      <div class="service-card cool">
+      <div class="service-card lift reveal">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M9 16v4M15 16v4"/></svg></div>
         <h3>Mini-Splits</h3>
         <p>Targeted, ductless comfort for additions, garages, and room-by-room control.</p>
@@ -670,7 +696,7 @@
         </ul>
       </div>
 
-      <div class="service-card neutral">
+      <div class="service-card lift reveal d1">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-8 4 16 2-8h7"/></svg></div>
         <h3>Ductwork</h3>
         <p>Sealed, sized-right ductwork means your system isn't fighting to keep up.</p>
@@ -681,7 +707,7 @@
         </ul>
       </div>
 
-      <div class="service-card neutral">
+      <div class="service-card lift reveal d2">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-4.4 7-11.5V5l-7-3-7 3v5.5C5 17.6 12 22 12 22z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
         <h3>Indoor Air Quality</h3>
         <p>Cleaner air for allergy season and every season in between.</p>
@@ -694,36 +720,36 @@
 
     </div>
 
-    <p class="services-note">Also servicing package units, swamp cooler replacements, and new-construction HVAC. <a href="tel:5596232210" style="color:var(--navy); font-weight:600; text-decoration:underline;">Don't see your issue? Just call.</a></p>
+    <p class="services-note">Also servicing package units, swamp cooler replacements, and new-construction HVAC. <a href="tel:5596232210" style="color:var(--navy); font-weight:700; text-decoration:underline;">Don't see your issue? Just call.</a></p>
   </div>
 </section>
 
 <!-- ============ CERTIFICATIONS ============ -->
 <section class="cert-strip" id="trust">
   <div class="wrap">
-    <div class="section-head center">
-      <div class="eyebrow">Built On Trust, Not Talk</div>
+    <div class="section-head center reveal">
+      <div class="eyebrow on-dark">Built On Trust, Not Talk</div>
       <h2>Licensed, insured, and easy to check up on.</h2>
       <p>We'd rather you verify us than just take our word for it.</p>
     </div>
     <div class="cert-grid">
-      <div class="cert-card">
-        <div class="service-icon" style="background:rgba(0,0,128,0.10);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--navy);"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg></div>
+      <div class="cert-card lift reveal">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg></div>
         <h4>CA Contractor License</h4>
         <p>Licensed HVAC contractor, #960470 &mdash; verifiable with the California CSLB.</p>
       </div>
-      <div class="cert-card">
-        <div class="service-icon" style="background:rgba(13,217,231,0.16);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan-deep);"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+      <div class="cert-card lift reveal d1">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
         <h4>Fully Insured &amp; Bonded</h4>
         <p>Your home and our crew are covered on every job, every time.</p>
       </div>
-      <div class="cert-card">
-        <div class="service-icon" style="background:rgba(178,6,6,0.12);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+      <div class="cert-card lift reveal d2">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <h4>Owner Signs Off, Always</h4>
         <p>Miguel personally reviews every estimate and every finished job.</p>
       </div>
-      <div class="cert-card">
-        <div class="service-icon" style="background:rgba(0,0,128,0.10);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--navy);"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+      <div class="cert-card lift reveal d3">
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
         <h4>Reviewed on Yelp &amp; Facebook</h4>
         <p><a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener">Yelp</a> &amp; <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener">Facebook</a> &mdash; read what real customers say.</p>
       </div>
@@ -734,7 +760,7 @@
 <!-- ============ OUR STORY ============ -->
 <section class="story" id="story">
   <div class="wrap story-grid">
-    <div>
+    <div class="reveal">
       <div class="avatar-badge">MG</div>
       <div class="story-stats">
         <div class="stat-tile"><strong>100%</strong><span>Of jobs personally reviewed by Miguel</span></div>
@@ -744,7 +770,7 @@
       </div>
     </div>
 
-    <div class="story-card">
+    <div class="story-card reveal d1">
       <div class="eyebrow on-dark">Our Story</div>
       <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
       <p class="quote">
@@ -758,13 +784,13 @@
 <!-- ============ THE MG'S STANDARD ============ -->
 <section class="standard" id="standard">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow on-dark">The Difference</div>
       <h2>What a proper install actually looks like.</h2>
       <p>Most HVAC headaches trace back to shortcuts taken during the last install. Here's what we do differently.</p>
     </div>
     <div class="compare-grid">
-      <div class="compare-card bad">
+      <div class="compare-card bad reveal">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>The Corner-Cutting Way</h3>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Unit sized off the old one, not your actual home</span></li>
@@ -773,7 +799,7 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Whoever's on shift shows up, salesperson long gone</span></li>
         </ul>
       </div>
-      <div class="compare-card good">
+      <div class="compare-card good reveal d1">
         <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>The MG's Standard</h3>
         <ul>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>System sized to your home's actual load</span></li>
@@ -789,13 +815,13 @@
 <!-- ============ GALLERY ============ -->
 <section id="gallery">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow">Recent Work</div>
       <h2>See MG's in action around the Valley.</h2>
       <p>A look at recent installs, repairs, and the systems we work on every day.</p>
     </div>
 
-    <div class="gallery-grid">
+    <div class="gallery-grid reveal">
       <a href="#" class="g-tall"><img src="assets/images/gallery-3.jpg" alt="HVAC technicians completing a rooftop installation"/><span>Rooftop System Install</span></a>
       <a href="#"><img src="assets/images/gallery-1.jpg" alt="Newly installed outdoor AC condenser unit"/><span>AC Condenser Install</span></a>
       <a href="#"><img src="assets/images/gallery-2.jpg" alt="Ductless mini-split unit mounted on exterior wall"/><span>Mini-Split Setup</span></a>
@@ -807,17 +833,17 @@
 </section>
 
 <!-- ============ REVIEWS ============ -->
-<section id="reviews">
+<section class="reviews" id="reviews">
   <div class="wrap">
-    <div class="reviews-banner">
+    <div class="reviews-banner reveal">
       <div class="section-head center">
-        <div class="eyebrow">Customer Reviews</div>
+        <div class="eyebrow on-dark">Customer Reviews</div>
         <h2>Don't take our word for it.</h2>
         <p>Read what real Tulare Valley homeowners say about working with Miguel and his crew, straight from the source.</p>
       </div>
       <div class="reviews-links">
-        <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="btn btn-navy">Read Our Yelp Reviews</a>
-        <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="btn btn-outline">Read Our Facebook Reviews</a>
+        <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="btn btn-red">Read Our Yelp Reviews</a>
+        <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="btn btn-ghost">Read Our Facebook Reviews</a>
       </div>
     </div>
   </div>
@@ -826,7 +852,7 @@
 <!-- ============ SERVICE AREA ============ -->
 <section id="service-area">
   <div class="wrap area-grid">
-    <div>
+    <div class="reveal">
       <div class="eyebrow">Where We Work</div>
       <h2 style="font-size:clamp(28px,3.6vw,38px); margin:16px 0 14px;">Proudly serving the Central Valley.</h2>
       <p style="color:var(--muted); font-size:16.5px;">Based in Visalia, MG's covers roughly a 1-hour radius. If you're anywhere near these counties, there's a good chance we can get to you.</p>
@@ -838,7 +864,7 @@
       </div>
       <a href="tel:5596232210" class="btn btn-red">Not sure if you're in range? Just call.</a>
     </div>
-    <div class="area-map">
+    <div class="area-map reveal d1">
       <div class="area-ring r1"></div>
       <div class="area-ring r2"></div>
       <div class="area-ring r3"></div>
@@ -853,12 +879,12 @@
 <!-- ============ FAQ ============ -->
 <section id="faq">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow">Questions</div>
       <h2>Straight answers, before you call.</h2>
       <p>Can't find what you're looking for? Call 559-623-2210 &mdash; a real person picks up.</p>
     </div>
-    <div class="faq-list">
+    <div class="faq-list reveal">
       <details class="faq-item" open>
         <summary><span class="faq-q">Is the estimate actually free?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
         <p class="faq-a">Yes &mdash; no cost, no obligation, and no high-pressure follow-up calls. Miguel walks the job, gives you a straight number, and lets you decide.</p>
@@ -890,13 +916,13 @@
 <!-- ============ BOOKING ============ -->
 <section class="booking" id="booking">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow">Get Started</div>
       <h2>Book your free estimate.</h2>
       <p>Tell us what's going on and Miguel's team will follow up to schedule your visit &mdash; no pressure, no obligation.</p>
     </div>
 
-    <div class="booking-shell">
+    <div class="booking-shell reveal">
       <div class="booking-side">
         <div>
           <div class="eyebrow on-dark">Why book with MG's</div>
@@ -950,25 +976,25 @@
 <!-- ============ RESOURCES ============ -->
 <section id="resources">
   <div class="wrap">
-    <div class="section-head center">
+    <div class="section-head center reveal">
       <div class="eyebrow">Resources</div>
       <h2>Guides to keep your system running.</h2>
       <p>We're building out this library &mdash; check back soon for more.</p>
     </div>
     <div class="resources-grid">
-      <div class="resource-card">
+      <div class="resource-card lift reveal">
         <span class="resource-badge">Coming Soon</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
         <h4>AC Repair or Replacement? How to Tell</h4>
         <p>The signs that mean "call for a tune-up" versus "start budgeting for a new system."</p>
       </div>
-      <div class="resource-card">
+      <div class="resource-card lift reveal d1">
         <span class="resource-badge">Coming Soon</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
         <h4>How Often You Really Need to Change Your Filter</h4>
         <p>It's not every month for everyone &mdash; here's how to figure out your actual schedule.</p>
       </div>
-      <div class="resource-card">
+      <div class="resource-card lift reveal d2">
         <span class="resource-badge">Coming Soon</span>
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
         <h4>Is a Mini-Split Right for Your Garage or Addition?</h4>
@@ -1038,6 +1064,33 @@
     </div>
   </div>
 </footer>
+
+<script>
+(function(){
+  var header = document.querySelector('header');
+  function onScroll(){
+    if (window.scrollY > 30) header.classList.add('is-scrolled');
+    else header.classList.remove('is-scrolled');
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  var els = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){ io.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+})();
+</script>
 
 </body>
 </html>
