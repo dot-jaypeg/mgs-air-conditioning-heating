@@ -384,6 +384,93 @@
     font-size:12.5px; color:rgba(255,255,255,0.4);
   }
 
+  /* ============ CERTIFICATIONS ============ */
+  .cert-strip{ padding:64px 0; }
+  .cert-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
+  .cert-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:26px 24px; display:flex; flex-direction:column; gap:10px;
+  }
+  .cert-card .service-icon{ width:44px; height:44px; border-radius:14px; }
+  .cert-card .service-icon svg{ width:22px; height:22px; }
+  .cert-card h4{ font-size:15.5px; color:var(--navy); }
+  .cert-card p{ font-size:13.5px; color:var(--muted); line-height:1.55; }
+  .cert-card p a{ font-weight:600; color:var(--cyan-deep); text-decoration:underline; }
+
+  /* ============ THE MG'S STANDARD ============ */
+  .standard{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
+  .standard .section-head h2{ color:#fff; }
+  .standard .section-head p{ color:rgba(255,255,255,0.7); }
+  .compare-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:24px; }
+  .compare-card{ border-radius:var(--radius-lg); padding:36px; }
+  .compare-card.bad{ background:rgba(178,6,6,0.14); border:1px solid rgba(178,6,6,0.35); }
+  .compare-card.good{ background:rgba(13,217,231,0.12); border:1px solid rgba(13,217,231,0.35); }
+  .compare-card h3{ color:#fff; font-size:19px; margin-bottom:18px; display:flex; align-items:center; gap:10px; }
+  .compare-card h3 svg{ width:22px; height:22px; flex-shrink:0; }
+  .compare-card ul{ display:flex; flex-direction:column; gap:14px; }
+  .compare-card li{ display:flex; align-items:flex-start; gap:10px; font-size:14.5px; color:rgba(255,255,255,0.85); }
+  .compare-card li svg{ width:18px; height:18px; flex-shrink:0; margin-top:2px; }
+  .compare-card li span{ min-width:0; }
+  .compare-card.bad svg{ color:var(--red); }
+  .compare-card.good svg{ color:var(--cyan); }
+
+  /* ============ REVIEWS ============ */
+  .reviews-banner{
+    background:linear-gradient(135deg, rgba(13,217,231,0.14), rgba(0,0,128,0.06));
+    border:1px solid var(--line); border-radius:var(--radius-lg);
+    padding:56px; text-align:center;
+  }
+  .reviews-banner .section-head{ margin:0 auto 30px; }
+  .reviews-links{ display:flex; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+  /* ============ SERVICE AREA ============ */
+  .area-grid{ display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px; align-items:center; }
+  .area-list{ display:flex; flex-direction:column; gap:16px; margin:26px 0 32px; }
+  .area-list div{ display:flex; align-items:center; gap:12px; font-size:15px; color:var(--ink); font-weight:600; }
+  .area-list div span{ min-width:0; }
+  .area-list svg{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; }
+  .area-map{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
+  .area-ring{ position:absolute; border:1.5px dashed rgba(0,0,128,0.22); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
+  .area-ring.r1{ width:100%; height:100%; }
+  .area-ring.r2{ width:68%; height:68%; }
+  .area-ring.r3{ width:36%; height:36%; border-style:solid; background:rgba(13,217,231,0.14); }
+  .area-pin{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; }
+  .area-pin .dot{ width:16px; height:16px; border-radius:50%; background:var(--red); box-shadow:0 0 0 6px rgba(178,6,6,0.18); }
+  .area-pin span{ font-family:"Suisse Intl"; font-weight:700; font-size:12.5px; color:var(--navy); background:#fff; padding:5px 12px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
+  .area-county{ position:absolute; font-size:12.5px; font-weight:600; color:var(--navy); background:#fff; padding:6px 13px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
+  .area-county.n{ top:0; left:50%; transform:translate(-50%,-50%); }
+  .area-county.w{ top:50%; left:0; transform:translate(-50%,-50%); }
+  .area-county.s{ bottom:0; left:50%; transform:translate(-50%,50%); }
+
+  /* ============ FAQ ============ */
+  .faq-list{ display:flex; flex-direction:column; gap:14px; max-width:760px; margin:0 auto; }
+  .faq-item{ background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md); overflow:hidden; }
+  .faq-item summary{
+    list-style:none; cursor:pointer; padding:22px 26px;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::marker{ display:none; content:""; }
+  .faq-q{ min-width:0; flex:1; font-family:"Suisse Intl"; font-weight:700; font-size:16px; color:var(--navy); }
+  .faq-item .chevron{ width:20px; height:20px; color:var(--cyan-deep); flex-shrink:0; transition:transform .2s ease; }
+  .faq-item[open] .chevron{ transform:rotate(180deg); }
+  .faq-item .faq-a{ padding:0 26px 22px; color:var(--muted); font-size:14.5px; line-height:1.6; }
+
+  /* ============ RESOURCES ============ */
+  .resources-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
+  .resource-card{
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:28px; position:relative; display:flex; flex-direction:column; gap:12px;
+  }
+  .resource-badge{
+    position:absolute; top:20px; right:20px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
+    color:var(--muted); background:rgba(0,0,128,0.06); padding:5px 10px; border-radius:999px;
+  }
+  .resource-card .service-icon{ background:rgba(13,217,231,0.16); }
+  .resource-card .service-icon svg{ color:var(--cyan-deep); }
+  .resource-card h4{ font-size:16.5px; color:var(--navy); padding-right:80px; }
+  .resource-card p{ font-size:14px; color:var(--muted); }
+
   /* ============ RESPONSIVE ============ */
   @media (max-width: 980px){
     .hero-grid{ grid-template-columns:1fr; }
@@ -394,6 +481,11 @@
     .footer-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
     .gallery-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .g-wide{ grid-column:span 1; }
+    .cert-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .compare-grid{ grid-template-columns:1fr; gap:20px; }
+    .area-grid{ grid-template-columns:1fr; }
+    .area-map{ max-width:320px; }
+    .resources-grid{ grid-template-columns:1fr; }
   }
 
   @media (max-width: 720px){
@@ -420,6 +512,10 @@
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
     .gallery-grid{ grid-auto-rows:130px; }
+    .cert-grid{ grid-template-columns:1fr; }
+    .reviews-banner{ padding:36px 22px; }
+    .resource-card h4{ padding-right:0; }
+    .resource-badge{ position:static; display:inline-block; margin-bottom:4px; }
   }
 </style>
 </head>
@@ -438,6 +534,7 @@
       <a href="#services">Services</a>
       <a href="#story">Our Story</a>
       <a href="#gallery">Gallery</a>
+      <a href="#reviews">Reviews</a>
       <a href="#booking">Book Now</a>
     </nav>
 
@@ -601,6 +698,39 @@
   </div>
 </section>
 
+<!-- ============ CERTIFICATIONS ============ -->
+<section class="cert-strip" id="trust">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">Built On Trust, Not Talk</div>
+      <h2>Licensed, insured, and easy to check up on.</h2>
+      <p>We'd rather you verify us than just take our word for it.</p>
+    </div>
+    <div class="cert-grid">
+      <div class="cert-card">
+        <div class="service-icon" style="background:rgba(0,0,128,0.10);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--navy);"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg></div>
+        <h4>CA Contractor License</h4>
+        <p>Licensed HVAC contractor, #960470 &mdash; verifiable with the California CSLB.</p>
+      </div>
+      <div class="cert-card">
+        <div class="service-icon" style="background:rgba(13,217,231,0.16);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--cyan-deep);"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+        <h4>Fully Insured &amp; Bonded</h4>
+        <p>Your home and our crew are covered on every job, every time.</p>
+      </div>
+      <div class="cert-card">
+        <div class="service-icon" style="background:rgba(178,6,6,0.12);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--red);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4>Owner Signs Off, Always</h4>
+        <p>Miguel personally reviews every estimate and every finished job.</p>
+      </div>
+      <div class="cert-card">
+        <div class="service-icon" style="background:rgba(0,0,128,0.10);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:var(--navy);"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
+        <h4>Reviewed on Yelp &amp; Facebook</h4>
+        <p><a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener">Yelp</a> &amp; <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener">Facebook</a> &mdash; read what real customers say.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ OUR STORY ============ -->
 <section class="story" id="story">
   <div class="wrap story-grid">
@@ -625,6 +755,37 @@
   </div>
 </section>
 
+<!-- ============ THE MG'S STANDARD ============ -->
+<section class="standard" id="standard">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow on-dark">The Difference</div>
+      <h2>What a proper install actually looks like.</h2>
+      <p>Most HVAC headaches trace back to shortcuts taken during the last install. Here's what we do differently.</p>
+    </div>
+    <div class="compare-grid">
+      <div class="compare-card bad">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>The Corner-Cutting Way</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Unit sized off the old one, not your actual home</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Old, leaky ductwork reused as-is</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Refrigerant charge eyeballed, not measured</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg><span>Whoever's on shift shows up, salesperson long gone</span></li>
+        </ul>
+      </div>
+      <div class="compare-card good">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>The MG's Standard</h3>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>System sized to your home's actual load</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Ductwork inspected, sealed, or replaced</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Refrigerant charge measured to manufacturer spec</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Miguel reviews the job before we call it done</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ GALLERY ============ -->
 <section id="gallery">
   <div class="wrap">
@@ -641,6 +802,87 @@
       <a href="#" class="g-wide"><img src="assets/images/gallery-6.jpg" alt="Modern Visalia-area home kept comfortable year-round"/><span>Whole-Home Comfort</span></a>
       <a href="#"><img src="assets/images/gallery-4.jpg" alt="Residential air conditioning unit installation"/><span>Residential AC</span></a>
       <a href="#"><img src="assets/images/gallery-5.jpg" alt="Technician performing a detailed system inspection"/><span>System Diagnostics</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews">
+  <div class="wrap">
+    <div class="reviews-banner">
+      <div class="section-head center">
+        <div class="eyebrow">Customer Reviews</div>
+        <h2>Don't take our word for it.</h2>
+        <p>Read what real Tulare Valley homeowners say about working with Miguel and his crew, straight from the source.</p>
+      </div>
+      <div class="reviews-links">
+        <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="btn btn-navy">Read Our Yelp Reviews</a>
+        <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="btn btn-outline">Read Our Facebook Reviews</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICE AREA ============ -->
+<section id="service-area">
+  <div class="wrap area-grid">
+    <div>
+      <div class="eyebrow">Where We Work</div>
+      <h2 style="font-size:clamp(28px,3.6vw,38px); margin:16px 0 14px;">Proudly serving the Central Valley.</h2>
+      <p style="color:var(--muted); font-size:16.5px;">Based in Visalia, MG's covers roughly a 1-hour radius. If you're anywhere near these counties, there's a good chance we can get to you.</p>
+      <div class="area-list">
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg><span>Tulare County &mdash; home base</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg><span>Kings County</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg><span>Kern County</span></div>
+        <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4.5 8-11.8V5l-8-3-8 3v5.2C4 17.5 12 22 12 22z"/></svg><span>Fresno County</span></div>
+      </div>
+      <a href="tel:5596232210" class="btn btn-red">Not sure if you're in range? Just call.</a>
+    </div>
+    <div class="area-map">
+      <div class="area-ring r1"></div>
+      <div class="area-ring r2"></div>
+      <div class="area-ring r3"></div>
+      <div class="area-pin"><div class="dot"></div><span>Visalia, CA</span></div>
+      <div class="area-county n">Fresno County</div>
+      <div class="area-county w">Kings County</div>
+      <div class="area-county s">Kern County</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">Questions</div>
+      <h2>Straight answers, before you call.</h2>
+      <p>Can't find what you're looking for? Call 559-623-2210 &mdash; a real person picks up.</p>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item" open>
+        <summary><span class="faq-q">Is the estimate actually free?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">Yes &mdash; no cost, no obligation, and no high-pressure follow-up calls. Miguel walks the job, gives you a straight number, and lets you decide.</p>
+      </details>
+      <details class="faq-item">
+        <summary><span class="faq-q">Do you offer financing?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">Yes, financing options are available for larger installs and replacements. Just ask about it when we quote your job.</p>
+      </details>
+      <details class="faq-item">
+        <summary><span class="faq-q">What areas do you actually cover?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">We're based in Visalia and regularly serve Tulare, Kings, Kern, and Fresno counties &mdash; roughly a 1-hour drive. If you're close to that range, give us a call and we'll let you know.</p>
+      </details>
+      <details class="faq-item">
+        <summary><span class="faq-q">Is MG's licensed and insured?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">Yes &mdash; California Contractor License #960470, fully insured and bonded.</p>
+      </details>
+      <details class="faq-item">
+        <summary><span class="faq-q">What happens if I call after hours?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">559-623-2210 is answered 24/7 for emergencies. Regular business hours are Monday&ndash;Saturday, 8am&ndash;5pm.</p>
+      </details>
+      <details class="faq-item">
+        <summary><span class="faq-q">Will I actually talk to Miguel, or a salesperson?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">Miguel personally handles estimates and oversees every install, from the first phone call to the final walkthrough. No call centers, no commissioned reps.</p>
+      </details>
     </div>
   </div>
 </section>
@@ -705,6 +947,37 @@
   </div>
 </section>
 
+<!-- ============ RESOURCES ============ -->
+<section id="resources">
+  <div class="wrap">
+    <div class="section-head center">
+      <div class="eyebrow">Resources</div>
+      <h2>Guides to keep your system running.</h2>
+      <p>We're building out this library &mdash; check back soon for more.</p>
+    </div>
+    <div class="resources-grid">
+      <div class="resource-card">
+        <span class="resource-badge">Coming Soon</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+        <h4>AC Repair or Replacement? How to Tell</h4>
+        <p>The signs that mean "call for a tune-up" versus "start budgeting for a new system."</p>
+      </div>
+      <div class="resource-card">
+        <span class="resource-badge">Coming Soon</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+        <h4>How Often You Really Need to Change Your Filter</h4>
+        <p>It's not every month for everyone &mdash; here's how to figure out your actual schedule.</p>
+      </div>
+      <div class="resource-card">
+        <span class="resource-badge">Coming Soon</span>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></div>
+        <h4>Is a Mini-Split Right for Your Garage or Addition?</h4>
+        <p>What ductless systems are actually good for, and when they're not the answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="wrap">
@@ -740,6 +1013,9 @@
         <ul>
           <li><a href="#story">Our Story</a></li>
           <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#service-area">Service Area</a></li>
           <li><a href="#booking">Book an Estimate</a></li>
           <li><a href="tel:5596232210">Emergency Service</a></li>
         </ul>
