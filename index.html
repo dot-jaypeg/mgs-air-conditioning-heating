@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MG's Air Conditioning &amp; Heating | Visalia, CA HVAC Experts</title>
 <meta name="description" content="Family-owned, owner-operated HVAC company serving Visalia and the surrounding Tulare, Kings, Kern, and Fresno counties. AC, heating, and indoor air quality — no high-pressure sales, ever." />
+<link rel="icon" type="image/png" href="assets/images/favicon.png" />
 
 <style>
 
@@ -171,6 +172,16 @@
   .btn-outline{ background:transparent; color:var(--navy); border-color:var(--navy); }
   .btn-outline:hover{ background:var(--navy); color:#fcfcfc; }
   .btn-sm{ padding:11px 20px; font-size:14px; border-width:1.5px; }
+  .btn-call{
+    padding:14px 28px; font-size:15.5px;
+    animation:call-pulse 2.6s ease-in-out infinite;
+  }
+  .btn-call:hover{ animation-play-state:paused; }
+  @keyframes call-pulse{
+    0%,100%{ box-shadow:0 6px 20px -4px rgba(178,6,6,0.7), 0 0 0 0 rgba(178,6,6,0.4); }
+    50%{ box-shadow:0 8px 26px -2px rgba(178,6,6,0.85), 0 0 0 9px rgba(178,6,6,0.12); }
+  }
+  @media (prefers-reduced-motion: reduce){ .btn-call{ animation:none; } }
   .btn svg{ width:18px; height:18px; flex-shrink:0; }
 
   /* ============ UTILITY BAR ============ */
@@ -180,21 +191,19 @@
   .utility-left span{ display:flex; align-items:center; gap:7px; white-space:nowrap; }
   .utility-left svg{ width:14px; height:14px; color:var(--cyan); flex-shrink:0; }
 
-  /* ============ HEADER (smart show/hide) ============ */
+  /* ============ HEADER (sticky) ============ */
   /* Default = frosted glass over the hero photo. .is-scrolled (once past the hero) = solid off-white. */
   header{
     position:sticky; top:0; z-index:100;
     background:rgba(4,6,58,0.4);
     backdrop-filter:blur(18px) saturate(1.4);
     -webkit-backdrop-filter:blur(18px) saturate(1.4);
-    transform:translateY(0);
-    transition:transform .35s cubic-bezier(.4,0,.2,1), box-shadow .3s ease, background .35s ease;
+    transition:box-shadow .3s ease, background .35s ease;
   }
   header.is-scrolled{
     background:rgba(252,252,252,0.97);
     box-shadow:0 10px 30px -16px rgba(0,0,0,0.35);
   }
-  header.nav-hidden{ transform:translateY(-100%); }
   .nav{
     display:flex; align-items:center; justify-content:space-between; flex-wrap:nowrap; gap:12px;
     padding:14px 0;
@@ -249,8 +258,8 @@
   .hero-overlay{
     position:absolute; inset:0;
     background:
-      linear-gradient(185deg, rgba(4,6,58,0.82) 0%, rgba(4,6,58,0.6) 45%, rgba(4,6,58,0.92) 100%),
-      linear-gradient(110deg, rgba(4,6,58,0.55) 0%, rgba(178,6,6,0.12) 55%, transparent 85%);
+      linear-gradient(185deg, rgba(4,6,58,0.5) 0%, rgba(4,6,58,0.32) 45%, rgba(4,6,58,0.58) 100%),
+      linear-gradient(110deg, rgba(4,6,58,0.32) 0%, rgba(178,6,6,0.08) 55%, transparent 85%);
   }
   .hero-inner{
     position:relative; z-index:2;
@@ -261,12 +270,13 @@
     font-size:clamp(42px, 7vw, 92px);
     line-height:0.98;
     margin:20px 0 34px;
+    text-shadow:0 4px 24px rgba(4,6,58,0.45);
   }
   .hero h1 .hl{ color:var(--cyan); }
   .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:36px; max-width:100%; }
 
   .hero-trust{ display:flex; flex-wrap:wrap; gap:16px 28px; max-width:100%; }
-  .hero-trust div{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:700; color:#fcfcfc; min-width:0; }
+  .hero-trust div{ display:flex; align-items:center; gap:10px; font-size:13.5px; font-weight:700; color:#fcfcfc; min-width:0; text-shadow:0 2px 10px rgba(4,6,58,0.5); }
   .hero-trust div span{ min-width:0; }
   .hero-trust svg{ width:20px; height:20px; color:var(--cyan); flex-shrink:0; }
 
@@ -378,7 +388,8 @@
   }
   .story-card h2{ color:#fcfcfc; font-size:clamp(26px,3.4vw,34px); margin-bottom:18px; }
   .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:22px; }
-  .story-card .sign{ font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
+  .story-card .sign{ display:flex; align-items:center; gap:16px; font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
+  .story-card .sign img{ height:48px; width:auto; border-radius:10px; flex-shrink:0; box-shadow:var(--shadow-tight); }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(252,252,252,0.6); margin-top:2px; }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
@@ -427,19 +438,12 @@
   .area-list div{ display:flex; align-items:center; gap:12px; font-size:15px; color:var(--ink); font-weight:700; }
   .area-list div span{ min-width:0; }
   .area-list svg{ width:20px; height:20px; color:var(--red); flex-shrink:0; }
-  .area-map{ position:relative; width:100%; aspect-ratio:1/1; max-width:400px; margin:0 auto; }
-  .area-ring{ position:absolute; border:1.5px dashed rgba(4,6,58,0.25); border-radius:50%; top:50%; left:50%; transform:translate(-50%,-50%); }
-  .area-ring.r1{ width:100%; height:100%; }
-  .area-ring.r2{ width:68%; height:68%; }
-  .area-ring.r3{ width:36%; height:36%; border-style:solid; border-color:var(--red); background:rgba(178,6,6,0.1); }
-  .area-pin{ position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); display:flex; flex-direction:column; align-items:center; gap:6px; z-index:2; }
-  .area-pin .dot{ width:16px; height:16px; border-radius:50%; background:var(--red); box-shadow:0 0 0 6px rgba(178,6,6,0.2); animation:pulse-dot 2.4s ease-in-out infinite; }
-  @keyframes pulse-dot{ 0%,100%{ box-shadow:0 0 0 6px rgba(178,6,6,0.2); } 50%{ box-shadow:0 0 0 11px rgba(178,6,6,0.08); } }
-  .area-pin span{ font-family:"Suisse Intl"; font-weight:700; font-size:12.5px; color:var(--navy); background:#fcfcfc; padding:5px 12px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; }
-  .area-county{ position:absolute; font-size:12.5px; font-weight:700; color:var(--navy); background:#fcfcfc; padding:6px 13px; border-radius:999px; box-shadow:var(--shadow-tight); white-space:nowrap; border:1.5px solid var(--line); }
-  .area-county.n{ top:0; left:50%; transform:translate(-50%,-50%); }
-  .area-county.w{ top:50%; left:0; transform:translate(-50%,-50%); }
-  .area-county.s{ bottom:0; left:50%; transform:translate(-50%,50%); }
+  .area-map-embed{
+    position:relative; width:100%; aspect-ratio:4/3;
+    border-radius:var(--radius-lg); overflow:hidden;
+    box-shadow:var(--shadow-soft); border:2px solid var(--navy);
+  }
+  .area-map-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
 
   /* ============ FAQ ============ */
   .faq-list{ display:flex; flex-direction:column; gap:14px; max-width:760px; margin:0 auto; }
@@ -461,6 +465,7 @@
     border:2px solid var(--navy);
   }
   .booking-side{ background:var(--navy); color:#fcfcfc; padding:52px 44px; display:flex; flex-direction:column; justify-content:space-between; }
+  .booking-logo{ height:52px; width:auto; border-radius:12px; box-shadow:var(--shadow-tight); margin-bottom:18px; }
   .booking-side h2{ color:#fcfcfc; font-size:clamp(26px,3vw,32px); margin:14px 0 16px; }
   .booking-side p{ color:rgba(252,252,252,0.72); font-size:15px; margin-bottom:30px; }
   .booking-perks{ display:flex; flex-direction:column; gap:16px; margin-bottom:36px; }
@@ -535,7 +540,7 @@
     .cert-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .compare-grid{ grid-template-columns:1fr; gap:20px; }
     .area-grid{ grid-template-columns:1fr; }
-    .area-map{ max-width:320px; }
+    .area-map-embed{ aspect-ratio:1/1; }
     .resources-grid{ grid-template-columns:1fr; }
     .utility-left span.hide-sm{ display:none; }
   }
@@ -608,7 +613,7 @@
         <small>Available 24/7 for emergencies</small>
         <strong>559-623-2210</strong>
       </div>
-      <a href="tel:5596232210" class="btn btn-red btn-sm">
+      <a href="tel:5596232210" class="btn btn-red btn-call">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
         Call Now
       </a>
@@ -622,7 +627,7 @@
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
   <div class="hero-media">
-    <img src="assets/images/hero-oldsite.jpg" alt="MG's crew mid-install on a residential rooftop package unit" />
+    <img src="assets/images/hero-drone-team.jpg" alt="The full MG's Air Conditioning & Heating team and fleet outside their Visalia shop" />
     <div class="hero-overlay"></div>
   </div>
   <div class="cursor-glow"></div>
@@ -820,7 +825,10 @@
       <p class="quote">
         "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
       </p>
-      <div class="sign">Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+      <div class="sign">
+        <img src="assets/images/logo-mark.png" alt="MG's Air Conditioning & Heating" />
+        <div>Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -908,14 +916,13 @@
       </div>
       <a href="tel:5596232210" class="btn btn-red">Not sure if you're in range? Just call.</a>
     </div>
-    <div class="area-map reveal d1">
-      <div class="area-ring r1"></div>
-      <div class="area-ring r2"></div>
-      <div class="area-ring r3"></div>
-      <div class="area-pin"><div class="dot"></div><span>Visalia, CA</span></div>
-      <div class="area-county n">Fresno County</div>
-      <div class="area-county w">Kings County</div>
-      <div class="area-county s">Kern County</div>
+    <div class="area-map-embed reveal d1">
+      <iframe
+        src="https://maps.google.com/maps?q=754+N+Gateway+St,+Visalia,+CA+93291&z=9&output=embed"
+        title="Map of MG's Air Conditioning &amp; Heating's Visalia, CA service area"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen></iframe>
     </div>
   </div>
 </section>
@@ -969,6 +976,7 @@
     <div class="booking-shell reveal">
       <div class="booking-side">
         <div>
+          <img src="assets/images/logo-mark.png" alt="MG's Air Conditioning & Heating" class="booking-logo" />
           <div class="eyebrow on-dark">Why book with MG's</div>
           <h2>Straightforward service, from the first call.</h2>
           <p>No call centers, no upsells &mdash; just a family business that shows up and does the job right.</p>
@@ -1112,8 +1120,6 @@
 (function(){
   var header = document.querySelector('header');
   var hero = document.querySelector('.hero');
-  var lastY = window.scrollY;
-  var HIDE_AFTER = 140;
 
   // Exposes the header's real height as a CSS var so the hero can pull itself
   // up behind the header (negative margin-top) by exactly that amount, letting
@@ -1137,10 +1143,6 @@
     var y = window.scrollY;
     if (y > solidAt) header.classList.add('is-scrolled');
     else header.classList.remove('is-scrolled');
-
-    if (y > lastY && y > HIDE_AFTER) header.classList.add('nav-hidden');
-    else if (y < lastY) header.classList.remove('nav-hidden');
-    lastY = y;
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
