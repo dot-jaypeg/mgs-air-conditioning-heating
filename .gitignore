@@ -1,2 +1,7 @@
 .DS_Store
 **/.DS_Store
+
+# Raw phone-shot video masters — large source files, not needed in git.
+# Compressed web versions live in assets/videos-web/ and ARE tracked.
+assets/videos/*.mov
+assets/videos/*.MOV

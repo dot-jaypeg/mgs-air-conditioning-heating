@@ -401,9 +401,10 @@
   .stat-tile.reveal.is-visible{ transform:scale(1) translateY(0); }
 
   /* ============ GALLERY ============ */
-  .gallery-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:190px; gap:16px; }
+  .gallery-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; max-width:760px; margin:0 auto; }
   .gallery-grid a{
     position:relative; border-radius:var(--radius-md); overflow:hidden; display:block;
+    aspect-ratio:3/4;
     transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
   }
   .gallery-grid a:hover{ box-shadow:0 0 0 2px var(--cyan), var(--shadow-soft); z-index:2; }
@@ -422,7 +423,22 @@
     opacity:0; transform:translateY(6px); transition:all .25s ease; z-index:1;
   }
   .gallery-grid a:hover span{ opacity:1; transform:translateY(0); }
-  .g-wide{ grid-column:span 2; }
+
+  /* ============ MOTION (video) ============ */
+  .motion-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; max-width:820px; margin:0 auto; }
+  .motion-card{
+    position:relative; border-radius:var(--radius-md); overflow:hidden;
+    aspect-ratio:9/16; background:var(--navy); box-shadow:var(--shadow-tight);
+  }
+  .motion-card video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .motion-card::after{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(180deg, transparent 55%, rgba(4,6,58,0.75));
+  }
+  .motion-card span{
+    position:absolute; left:16px; bottom:14px; right:16px; z-index:1;
+    color:#fcfcfc; font-size:13.5px; font-weight:700; text-shadow:0 2px 8px rgba(4,6,58,0.5);
+  }
 
   /* ============ REVIEWS ============ */
   .reviews{ background:var(--navy-ink); }
@@ -535,8 +551,7 @@
     .booking-shell{ grid-template-columns:1fr; }
     .services-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .footer-grid{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
-    .gallery-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-    .g-wide{ grid-column:span 1; }
+    .motion-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); max-width:560px; }
     .cert-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); }
     .compare-grid{ grid-template-columns:1fr; gap:20px; }
     .area-grid{ grid-template-columns:1fr; }
@@ -570,7 +585,8 @@
     .footer-grid{ grid-template-columns:1fr; gap:34px; }
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
-    .gallery-grid{ grid-auto-rows:130px; }
+    .gallery-grid{ grid-template-columns:1fr; max-width:340px; }
+    .motion-grid{ grid-template-columns:1fr; max-width:280px; }
     .cert-grid{ grid-template-columns:1fr; }
     .resource-card h4{ padding-right:0; }
     .resource-badge{ position:static; display:inline-block; margin-bottom:4px; }
@@ -604,6 +620,7 @@
       <a href="#services">Services</a>
       <a href="#story">Our Story</a>
       <a href="#gallery">Gallery</a>
+      <a href="#motion">In Motion</a>
       <a href="#reviews">Reviews</a>
       <a href="#booking">Book Now</a>
     </nav>
@@ -655,7 +672,7 @@
     <div class="quote-card reveal d2">
       <div class="badge">Free &middot; No Obligation</div>
       <h3>Get a fast, free estimate</h3>
-      <p>Tell us what's going on &mdash; Miguel's team follows up to schedule your visit.</p>
+      <p>Tell us what's going on &mdash; our team follows up to schedule your visit.</p>
       <div class="field"><label for="hero-name">Full Name</label><input id="hero-name" type="text" placeholder="Jane Rodriguez"/></div>
       <div class="field"><label for="hero-phone">Phone Number</label><input id="hero-phone" type="tel" placeholder="(559) 000-0000"/></div>
       <div class="field"><label for="hero-service">Service Needed</label>
@@ -678,16 +695,16 @@
 <!-- ============ MARQUEE ============ -->
 <div class="marquee">
   <div class="marquee-track">
-    <span>24/7 Emergency Repairs</span><span class="sep">&#9889;</span>
-    <span>No High-Pressure Sales</span><span class="sep">&#9889;</span>
-    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9889;</span>
-    <span>Family Owned &amp; Operated</span><span class="sep">&#9889;</span>
-    <span>Free Estimates</span><span class="sep">&#9889;</span>
-    <span>24/7 Emergency Repairs</span><span class="sep">&#9889;</span>
-    <span>No High-Pressure Sales</span><span class="sep">&#9889;</span>
-    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9889;</span>
-    <span>Family Owned &amp; Operated</span><span class="sep">&#9889;</span>
-    <span>Free Estimates</span><span class="sep">&#9889;</span>
+    <span>24/7 Emergency Repairs</span><span class="sep">&#9679;</span>
+    <span>No High-Pressure Sales</span><span class="sep">&#9679;</span>
+    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9679;</span>
+    <span>Family Owned &amp; Operated</span><span class="sep">&#9679;</span>
+    <span>Free Estimates</span><span class="sep">&#9679;</span>
+    <span>24/7 Emergency Repairs</span><span class="sep">&#9679;</span>
+    <span>No High-Pressure Sales</span><span class="sep">&#9679;</span>
+    <span>Licensed &amp; Insured &middot; #960470</span><span class="sep">&#9679;</span>
+    <span>Family Owned &amp; Operated</span><span class="sep">&#9679;</span>
+    <span>Free Estimates</span><span class="sep">&#9679;</span>
   </div>
 </div>
 
@@ -714,7 +731,7 @@
       </div>
 
       <div class="service-card heat lift reveal d1">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 17c1.38 0 2-1 2-2 0-1.5-2-2-2-3.5 0-1 .5-2 1.5-2 .5 1 1.5 1.5 1.5 3a4 4 0 0 1-8 0c0-2.5 2-3.5 2-6 0-1.5-.5-2.5-1-3 3 0 6 2.5 6 7a6 6 0 0 1-6 6 6 6 0 0 1-6-6c0-3 1.5-4.5 3-6"/></svg></div>
+        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11.5A2.5 2.5 0 0 0 8.5 14a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
         <h3>Furnace &amp; Heating</h3>
         <p>Dependable heat when the Valley fog rolls in, from tune-ups to full replacements.</p>
         <ul>
@@ -796,7 +813,7 @@
       <div class="cert-card lift reveal d2">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <h4>Owner Signs Off, Always</h4>
-        <p>Miguel personally reviews every estimate and every finished job.</p>
+        <p>Every estimate and every finished job gets a final walkthrough before we call it done.</p>
       </div>
       <div class="cert-card lift reveal d3">
         <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 17.27 18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg></div>
@@ -812,7 +829,7 @@
   <div class="wrap story-grid">
     <div class="reveal">
       <div class="story-stats">
-        <div class="stat-tile reveal"><strong>100%</strong><span>Of jobs personally reviewed by Miguel</span></div>
+        <div class="stat-tile reveal"><strong>100%</strong><span>Owner-operated, every single job</span></div>
         <div class="stat-tile reveal d1"><strong>4</strong><span>Counties served within a 1-hour radius</span></div>
         <div class="stat-tile reveal d2"><strong>0</strong><span>High-pressure sales pitches, guaranteed</span></div>
         <div class="stat-tile reveal d3"><strong>24/7</strong><span>Emergency line, always answered</span></div>
@@ -857,7 +874,7 @@
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>System sized to your home's actual load</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Ductwork inspected, sealed, or replaced</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Refrigerant charge measured to manufacturer spec</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Miguel reviews the job before we call it done</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Every job reviewed before we call it done</span></li>
         </ul>
       </div>
     </div>
@@ -874,12 +891,40 @@
     </div>
 
     <div class="gallery-grid reveal">
-      <a href="#" class="g-wide"><img src="assets/images/gallery-truck.jpg" alt="MG's service truck, ready for the next call"/><span>MG's on the Road</span></a>
-      <a href="#" class="g-wide"><img src="assets/images/gallery-rooftop2.jpg" alt="Technician servicing commercial rooftop AC units"/><span>Rooftop System Service</span></a>
-      <a href="#"><img src="assets/images/gallery-condenser2.jpg" alt="Technician repairing a residential condenser unit"/><span>Condenser Repair</span></a>
-      <a href="#"><img src="assets/images/gallery-splitunit.jpg" alt="Residential split-system AC condenser installed beside a home"/><span>Residential AC</span></a>
-      <a href="#"><img src="assets/images/gallery-ductseal.jpg" alt="Ductwork boot sealed and taped during installation"/><span>Ductwork Sealing</span></a>
-      <a href="#"><img src="assets/images/gallery-boiler.jpg" alt="Technician servicing a boiler and pump system"/><span>Boiler &amp; Pump Service</span></a>
+      <a href="#"><img src="assets/images/gallery-package-unit.jpg" alt="New Rheem package HVAC unit installed beside a home"/><span>New Package Unit Install</span></a>
+      <a href="#"><img src="assets/images/gallery-attic-airhandlers.jpg" alt="Two air handlers installed in a home's attic during new construction"/><span>Attic Air Handler Install</span></a>
+      <a href="#"><img src="assets/images/gallery-smart-thermostat.jpg" alt="Smart thermostat installed and set up with the MG's brand on screen"/><span>Smart Thermostat Setup</span></a>
+      <a href="#"><img src="assets/images/gallery-attic-ductwork.jpg" alt="New ductwork and insulation run through attic framing during new construction"/><span>New Construction Ductwork</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MOTION (video) ============ -->
+<section id="motion">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow">On The Job</div>
+      <h2>See MG's in motion.</h2>
+    </div>
+    <div class="motion-grid reveal">
+      <div class="motion-card">
+        <video muted loop playsinline preload="metadata" poster="assets/images/motion-rooftop-poster.jpg">
+          <source src="assets/videos-web/motion-rooftop.mp4" type="video/mp4">
+        </video>
+        <span>Coil Cleaning, Rooftop Unit</span>
+      </div>
+      <div class="motion-card">
+        <video muted loop playsinline preload="metadata" poster="assets/images/motion-van-logo-poster.jpg">
+          <source src="assets/videos-web/motion-van-logo.mp4" type="video/mp4">
+        </video>
+        <span>MG's Fleet</span>
+      </div>
+      <div class="motion-card">
+        <video muted loop playsinline preload="metadata" poster="assets/images/motion-van-outdoor-poster.jpg">
+          <source src="assets/videos-web/motion-van-outdoor.mp4" type="video/mp4">
+        </video>
+        <span>On Location In Visalia</span>
+      </div>
     </div>
   </div>
 </section>
@@ -891,7 +936,7 @@
       <div class="section-head center">
         <div class="eyebrow on-dark">Customer Reviews</div>
         <h2>Don't take our word for it.</h2>
-        <p>Read what real Tulare Valley homeowners say about working with Miguel and his crew, straight from the source.</p>
+        <p>Read what real Tulare Valley homeowners say about working with our crew, straight from the source.</p>
       </div>
       <div class="reviews-links">
         <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="btn btn-red">Read Our Yelp Reviews</a>
@@ -938,7 +983,7 @@
     <div class="faq-list reveal">
       <details class="faq-item" open>
         <summary><span class="faq-q">Is the estimate actually free?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p class="faq-a">Yes &mdash; no cost, no obligation, and no high-pressure follow-up calls. Miguel walks the job, gives you a straight number, and lets you decide.</p>
+        <p class="faq-a">Yes &mdash; no cost, no obligation, and no high-pressure follow-up calls. We walk the job, give you a straight number, and let you decide.</p>
       </details>
       <details class="faq-item">
         <summary><span class="faq-q">Do you offer financing?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
@@ -957,8 +1002,8 @@
         <p class="faq-a">559-623-2210 is answered 24/7 for emergencies. Regular business hours are Monday&ndash;Saturday, 8am&ndash;5pm.</p>
       </details>
       <details class="faq-item">
-        <summary><span class="faq-q">Will I actually talk to Miguel, or a salesperson?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
-        <p class="faq-a">Miguel personally handles estimates and oversees every install, from the first phone call to the final walkthrough. No call centers, no commissioned reps.</p>
+        <summary><span class="faq-q">Will I talk to a real person, or a salesperson?</span><svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></summary>
+        <p class="faq-a">MG's is owner-operated &mdash; our crew handles your estimate and install from the first phone call to the final walkthrough. No call centers, no commissioned reps.</p>
       </details>
     </div>
   </div>
@@ -970,7 +1015,7 @@
     <div class="section-head center reveal">
       <div class="eyebrow">Get Started</div>
       <h2>Book your free estimate.</h2>
-      <p>Tell us what's going on and Miguel's team will follow up to schedule your visit &mdash; no pressure, no obligation.</p>
+      <p>Tell us what's going on and our team will follow up to schedule your visit &mdash; no pressure, no obligation.</p>
     </div>
 
     <div class="booking-shell reveal">
@@ -983,7 +1028,7 @@
           <div class="booking-perks">
             <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Free, no-obligation estimates</div>
             <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/></svg>Financing options available</div>
-            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Miguel reviews every job personally</div>
+            <div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Owner-operated, every job we do</div>
           </div>
         </div>
         <div class="emergency-box">
@@ -1171,6 +1216,23 @@
       glow.style.opacity = '1';
     });
     hero.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
+  }
+
+  // Motion-card videos only play while scrolled into view (saves battery/bandwidth),
+  // and never autoplay for users who've asked for reduced motion.
+  var motionVideos = document.querySelectorAll('.motion-card video');
+  if (motionVideos.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    if ('IntersectionObserver' in window) {
+      var vio = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if (entry.isIntersecting) entry.target.play().catch(function(){});
+          else entry.target.pause();
+        });
+      }, {threshold:0.4});
+      motionVideos.forEach(function(v){ vio.observe(v); });
+    } else {
+      motionVideos.forEach(function(v){ v.play().catch(function(){}); });
+    }
   }
 
   // Tactile ripple on every button, from the actual click point.
