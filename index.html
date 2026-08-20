@@ -64,12 +64,31 @@
     --container:1220px;
   }
 
+  html{ background:var(--off); }
   body{
     font-family:"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     color:var(--ink);
-    background:var(--off);
+    background:transparent;
     -webkit-font-smoothing:antialiased;
     line-height:1.5;
+  }
+
+  /* ============ BRAND AMBIENT BACKGROUND ============ */
+  /* Fixed backdrop of soft red/navy/cyan color washes that shows through every
+     section that doesn't paint its own solid background, so scrolling never
+     hits a flat white panel. */
+  .brand-bg{
+    position:fixed; inset:0; z-index:-1; overflow:hidden; background:var(--off);
+  }
+  .brand-bg span{ position:absolute; border-radius:50%; filter:blur(70px); }
+  .brand-bg .b1{ width:560px; height:560px; background:var(--red); opacity:.16; top:-160px; left:-140px; }
+  .brand-bg .b2{ width:640px; height:640px; background:var(--cyan); opacity:.15; top:8%; right:-200px; }
+  .brand-bg .b3{ width:520px; height:520px; background:var(--navy); opacity:.14; top:42%; left:-180px; }
+  .brand-bg .b4{ width:600px; height:600px; background:var(--red); opacity:.13; bottom:-180px; right:6%; }
+  .brand-bg .b5{ width:480px; height:480px; background:var(--cyan); opacity:.14; bottom:2%; left:22%; }
+  @media (max-width: 720px){
+    .brand-bg span{ filter:blur(50px); }
+    .brand-bg .b1,.brand-bg .b2,.brand-bg .b3,.brand-bg .b4,.brand-bg .b5{ width:340px; height:340px; }
   }
 
   h1,h2,h3,h4{
@@ -115,6 +134,7 @@
     .reveal{ opacity:1!important; transform:none!important; transition:none!important; }
     .marquee-track{ animation:none!important; }
     .rword{ animation:none!important; transform:none!important; }
+    .service-card .flip-inner{ transition:none!important; }
   }
 
   /* ============ STAGGERED WORD REVEAL ============ */
@@ -317,12 +337,32 @@
   .section-head h2{ font-size:clamp(32px,4.4vw,48px); margin:16px 0 14px; }
   .section-head p{ color:var(--muted); font-size:16.5px; }
 
-  /* ============ SERVICES ============ */
+  /* ============ SERVICES (interactive flip cards) ============ */
   .services-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
-  .service-card{
-    background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md);
-    padding:32px 28px;
-    display:flex; flex-direction:column; gap:16px;
+  .service-card{ perspective:1400px; min-height:308px; border-radius:var(--radius-md); }
+  .service-card:focus{ outline:none; }
+  .service-card:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+  .service-card .flip-inner{
+    position:relative; width:100%; height:100%; min-height:308px;
+    transition:transform .7s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;
+  }
+  .service-card:hover .flip-inner,
+  .service-card:focus-within .flip-inner,
+  .service-card.is-flipped .flip-inner{ transform:rotateY(180deg); }
+  .flip-face{
+    position:absolute; inset:0; backface-visibility:hidden; overflow:hidden;
+    border-radius:var(--radius-md); padding:30px 26px;
+    display:flex; flex-direction:column; gap:14px;
+  }
+  .flip-front{ background:var(--card); border:2px solid var(--line); cursor:pointer; }
+  .flip-back{
+    transform:rotateY(180deg); background:var(--navy); border:2px solid transparent;
+    color:#fcfcfc; justify-content:space-between; cursor:pointer;
+  }
+  .service-card.heat .flip-back{ background:var(--red); }
+  .flip-face::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg, var(--red), var(--cyan));
   }
   .service-icon{
     width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center;
@@ -332,12 +372,18 @@
   .service-icon svg{ width:28px; height:28px; color:#fcfcfc; }
   .service-card.heat .service-icon{ background:var(--red); }
   .service-card:hover .service-icon{ transform:rotate(-8deg) scale(1.08); }
-  .service-card h3{ font-size:20px; }
-  .service-card p{ color:var(--muted); font-size:14.5px; }
-  .service-card ul{ display:flex; flex-direction:column; gap:7px; margin-top:2px; }
-  .service-card ul li{ font-size:13.5px; color:var(--ink); display:flex; align-items:center; gap:8px; }
-  .service-card ul li::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--red); flex-shrink:0; }
-  .service-card.heat ul li::before{ background:var(--navy); }
+  .flip-front h3{ font-size:20px; }
+  .flip-front p{ color:var(--muted); font-size:14.5px; }
+  .flip-hint{
+    margin-top:auto; font-size:12px; font-weight:700; color:var(--red);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .flip-hint svg{ width:14px; height:14px; }
+  .flip-back h3{ color:#fcfcfc; font-size:18px; }
+  .flip-back ul{ display:flex; flex-direction:column; gap:9px; }
+  .flip-back li{ font-size:13.5px; color:rgba(252,252,252,0.88); display:flex; align-items:flex-start; gap:8px; }
+  .flip-back li::before{ content:""; width:6px; height:6px; margin-top:6px; border-radius:50%; background:var(--cyan); flex-shrink:0; }
+  .flip-back .btn{ align-self:flex-start; }
 
   .services-note{ margin-top:34px; text-align:center; color:var(--muted); font-size:14.5px; }
 
@@ -347,8 +393,13 @@
   .cert-strip .section-head p{ color:rgba(252,252,252,0.65); }
   .cert-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
   .cert-card{
+    position:relative; overflow:hidden;
     background:rgba(252,252,252,0.05); border:1.5px solid rgba(252,252,252,0.14); border-radius:var(--radius-md);
     padding:26px 24px; display:flex; flex-direction:column; gap:10px;
+  }
+  .cert-card::before, .resource-card::before, .faq-item::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:4px;
+    background:linear-gradient(90deg, var(--red), var(--cyan));
   }
   .cert-card .service-icon{ width:44px; height:44px; border-radius:13px; background:rgba(13,217,231,0.16); }
   .cert-card .service-icon svg{ width:22px; height:22px; color:var(--cyan); }
@@ -440,6 +491,49 @@
     color:#fcfcfc; font-size:13.5px; font-weight:700; text-shadow:0 2px 8px rgba(4,6,58,0.5);
   }
 
+  /* ============ SMART CONTROL + SOCIAL ============ */
+  .social-cta{ background:var(--navy); color:#fcfcfc; position:relative; overflow:hidden; }
+  .social-cta::before{
+    content:""; position:absolute; width:480px; height:480px; border-radius:50%;
+    background:var(--cyan); opacity:.16; filter:blur(100px); top:-180px; right:-140px;
+  }
+  .social-cta::after{
+    content:""; position:absolute; width:420px; height:420px; border-radius:50%;
+    background:var(--red); opacity:.18; filter:blur(100px); bottom:-160px; left:-120px;
+  }
+  .social-cta .section-head h2{ color:#fcfcfc; }
+  .social-cta .section-head p{ color:rgba(252,252,252,.7); }
+  .social-feature{
+    position:relative; z-index:1; display:grid;
+    grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:56px; align-items:center;
+  }
+  .phone-mock{ justify-self:center; width:220px; }
+  .phone-frame{
+    position:relative; border-radius:36px; padding:14px; background:#0a0a1a;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.6), 0 0 0 2px rgba(252,252,252,.08);
+  }
+  .phone-frame::before{
+    content:""; position:absolute; top:14px; left:50%; transform:translateX(-50%);
+    width:70px; height:6px; border-radius:999px; background:rgba(252,252,252,.25); z-index:2;
+  }
+  .phone-frame img{ border-radius:24px; width:100%; display:block; aspect-ratio:9/16; object-fit:cover; }
+  .social-copy h3{ color:#fcfcfc; font-size:clamp(24px,3vw,30px); margin-bottom:14px; }
+  .social-copy > p{ color:rgba(252,252,252,.75); font-size:15.5px; margin-bottom:26px; max-width:480px; }
+  .social-links{ display:flex; flex-wrap:wrap; gap:12px; }
+  .social-btn{
+    display:inline-flex; align-items:center; gap:10px; padding:8px 20px 8px 8px;
+    border-radius:999px; background:rgba(252,252,252,.08); border:1.5px solid rgba(252,252,252,.2);
+    color:#fcfcfc; font-weight:700; font-size:14px;
+    transition:transform .2s ease, background .2s ease, border-color .2s ease;
+  }
+  .social-btn:hover{ transform:translateY(-3px); border-color:var(--cyan); background:rgba(252,252,252,.14); }
+  .social-btn .icon{
+    width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    background:rgba(252,252,252,.14); flex-shrink:0; transition:background .2s ease;
+  }
+  .social-btn:hover .icon{ background:var(--red); }
+  .social-btn .icon svg{ width:17px; height:17px; }
+
   /* ============ REVIEWS ============ */
   .reviews{ background:var(--navy-ink); }
   .reviews-banner{ text-align:center; }
@@ -463,7 +557,7 @@
 
   /* ============ FAQ ============ */
   .faq-list{ display:flex; flex-direction:column; gap:14px; max-width:760px; margin:0 auto; }
-  .faq-item{ background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md); overflow:hidden; transition:border-color .2s ease; }
+  .faq-item{ position:relative; background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md); overflow:hidden; transition:border-color .2s ease; }
   .faq-item[open]{ border-color:var(--navy); }
   .faq-item summary{ list-style:none; cursor:pointer; padding:22px 26px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .faq-item summary::-webkit-details-marker{ display:none; }
@@ -510,7 +604,7 @@
   .resources-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; }
   .resource-card{
     background:var(--card); border:2px solid var(--line); border-radius:var(--radius-md);
-    padding:28px; position:relative; display:flex; flex-direction:column; gap:12px;
+    padding:28px; position:relative; overflow:hidden; display:flex; flex-direction:column; gap:12px;
   }
   .resource-badge{
     position:absolute; top:20px; right:20px; font-size:10.5px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase;
@@ -558,6 +652,8 @@
     .area-map-embed{ aspect-ratio:1/1; }
     .resources-grid{ grid-template-columns:1fr; }
     .utility-left span.hide-sm{ display:none; }
+    .social-feature{ grid-template-columns:1fr; text-align:center; }
+    .social-links{ justify-content:center; }
   }
 
   @media (max-width: 720px){
@@ -597,6 +693,10 @@
 </style>
 </head>
 <body>
+
+<div class="brand-bg" aria-hidden="true">
+  <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span>
+</div>
 
 <!-- ============ UTILITY BAR ============ -->
 <div class="utility-bar">
@@ -718,70 +818,136 @@
 
     <div class="services-grid">
 
-      <div class="service-card lift reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1M2 12h20"/></svg></div>
-        <h3>Air Conditioning</h3>
-        <p>Keep Valley summers under control with a system sized right for your home.</p>
-        <ul>
-          <li>New AC installation &amp; replacement</li>
-          <li>Repairs &amp; refrigerant recharge</li>
-          <li>Seasonal maintenance plans</li>
-        </ul>
+      <div class="service-card reveal" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M4.9 4.9l14.2 14.2M19.1 4.9 4.9 19.1M2 12h20"/></svg></div>
+            <h3>Air Conditioning</h3>
+            <p>Keep Valley summers under control with a system sized right for your home.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Air Conditioning</h3>
+              <ul>
+                <li>New AC installation &amp; replacement</li>
+                <li>Repairs &amp; refrigerant recharge</li>
+                <li>Seasonal maintenance plans</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card heat lift reveal d1">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11.5A2.5 2.5 0 0 0 8.5 14a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
-        <h3>Furnace &amp; Heating</h3>
-        <p>Dependable heat when the Valley fog rolls in, from tune-ups to full replacements.</p>
-        <ul>
-          <li>Furnace installation &amp; repair</li>
-          <li>Annual safety inspections</li>
-          <li>Emergency no-heat calls</li>
-        </ul>
+      <div class="service-card heat reveal d1" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 11.5A2.5 2.5 0 0 0 8.5 14a2.5 2.5 0 0 0 2.5-2.5c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg></div>
+            <h3>Furnace &amp; Heating</h3>
+            <p>Dependable heat when the Valley fog rolls in, from tune-ups to full replacements.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Furnace &amp; Heating</h3>
+              <ul>
+                <li>Furnace installation &amp; repair</li>
+                <li>Annual safety inspections</li>
+                <li>Emergency no-heat calls</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card heat lift reveal d2">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
-        <h3>Heat Pumps</h3>
-        <p>One efficient system for year-round heating and cooling.</p>
-        <ul>
-          <li>Heat pump installation &amp; replacement</li>
-          <li>Repair &amp; diagnostics</li>
-          <li>Efficiency tune-ups</li>
-        </ul>
+      <div class="service-card heat reveal d2" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 0 1 4-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 0 1-4 4H3"/></svg></div>
+            <h3>Heat Pumps</h3>
+            <p>One efficient system for year-round heating and cooling.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Heat Pumps</h3>
+              <ul>
+                <li>Heat pump installation &amp; replacement</li>
+                <li>Repair &amp; diagnostics</li>
+                <li>Efficiency tune-ups</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card lift reveal">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M9 16v4M15 16v4"/></svg></div>
-        <h3>Mini-Splits</h3>
-        <p>Targeted, ductless comfort for additions, garages, and room-by-room control.</p>
-        <ul>
-          <li>Ductless system installation</li>
-          <li>Multi-zone setups</li>
-          <li>Repair &amp; maintenance</li>
-        </ul>
+      <div class="service-card reveal" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M7 20h10M9 16v4M15 16v4"/></svg></div>
+            <h3>Mini-Splits</h3>
+            <p>Targeted, ductless comfort for additions, garages, and room-by-room control.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Mini-Splits</h3>
+              <ul>
+                <li>Ductless system installation</li>
+                <li>Multi-zone setups</li>
+                <li>Repair &amp; maintenance</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card lift reveal d1">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-8 4 16 2-8h7"/></svg></div>
-        <h3>Ductwork</h3>
-        <p>Sealed, sized-right ductwork means your system isn't fighting to keep up.</p>
-        <ul>
-          <li>Duct installation &amp; replacement</li>
-          <li>Leak detection &amp; sealing</li>
-          <li>Airflow diagnostics</li>
-        </ul>
+      <div class="service-card reveal d1" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h5l2-8 4 16 2-8h7"/></svg></div>
+            <h3>Ductwork</h3>
+            <p>Sealed, sized-right ductwork means your system isn't fighting to keep up.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Ductwork</h3>
+              <ul>
+                <li>Duct installation &amp; replacement</li>
+                <li>Leak detection &amp; sealing</li>
+                <li>Airflow diagnostics</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
-      <div class="service-card lift reveal d2">
-        <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-4.4 7-11.5V5l-7-3-7 3v5.5C5 17.6 12 22 12 22z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
-        <h3>Indoor Air Quality</h3>
-        <p>Cleaner air for allergy season and every season in between.</p>
-        <ul>
-          <li>Air purifier &amp; UV light install</li>
-          <li>Smart thermostat setup</li>
-          <li>Whole-home filtration</li>
-        </ul>
+      <div class="service-card reveal d2" tabindex="0">
+        <div class="flip-inner">
+          <div class="flip-face flip-front">
+            <div class="service-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-4.4 7-11.5V5l-7-3-7 3v5.5C5 17.6 12 22 12 22z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg></div>
+            <h3>Indoor Air Quality</h3>
+            <p>Cleaner air for allergy season and every season in between.</p>
+            <span class="flip-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 4v6h-6M1 20v-6h6"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> See what's included</span>
+          </div>
+          <div class="flip-face flip-back">
+            <div>
+              <h3>Indoor Air Quality</h3>
+              <ul>
+                <li>Air purifier &amp; UV light install</li>
+                <li>Smart thermostat setup</li>
+                <li>Whole-home filtration</li>
+              </ul>
+            </div>
+            <a href="tel:5596232210" class="btn btn-ghost btn-sm">Call About This</a>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -923,6 +1089,46 @@
           <source src="assets/videos-web/motion-van-outdoor.mp4" type="video/mp4">
         </video>
         <span>On Location In Visalia</span>
+      </div>
+      <div class="motion-card">
+        <video muted loop playsinline preload="metadata" poster="assets/images/motion-lot-poster.jpg">
+          <source src="assets/videos-web/motion-lot.mp4" type="video/mp4">
+        </video>
+        <span>Fleet On The Move</span>
+      </div>
+      <div class="motion-card">
+        <video muted loop playsinline preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
+          <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
+        </video>
+        <span>Our Shop In Visalia</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SMART CONTROL + SOCIAL ============ -->
+<section class="social-cta" id="connect">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <div class="eyebrow on-dark">Stay Connected</div>
+      <h2>Comfort control that fits in your pocket.</h2>
+      <p>Ask about smart thermostat installs that let you check in and adjust your home from anywhere &mdash; then come see more of the crew on social.</p>
+    </div>
+    <div class="social-feature reveal">
+      <div class="phone-mock">
+        <div class="phone-frame">
+          <img src="assets/images/gallery-smart-thermostat.jpg" alt="Smart thermostat displaying the MG's Air Conditioning & Heating brand, ready to control from anywhere" />
+        </div>
+      </div>
+      <div class="social-copy">
+        <h3>Set it before you even walk in the door.</h3>
+        <p>A smart thermostat install puts full control of your home's temperature in your pocket &mdash; whether you're at work, on vacation, or already headed home. Ask us about options at your next visit, and follow along with the crew in the field.</p>
+        <div class="social-links">
+          <a href="https://www.instagram.com/mgs_air_conditioning_" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fcfcfc" stroke="none"/></svg></span>Instagram</a>
+          <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a>
+          <a href="https://www.tiktok.com/@mgsairconditioning" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></span>TikTok</a>
+          <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M12 2 4 20h16z"/></svg></span>Yelp</a>
+        </div>
       </div>
     </div>
   </div>
@@ -1233,6 +1439,15 @@
       motionVideos.forEach(function(v){ v.play().catch(function(){}); });
     }
   }
+
+  // Service cards flip on hover (desktop) via CSS; this adds a tap-to-flip
+  // toggle so touch devices (no real :hover) can flip them back and forth too.
+  document.querySelectorAll('.service-card').forEach(function(card){
+    card.addEventListener('click', function(e){
+      if (e.target.closest('a')) return;
+      card.classList.toggle('is-flipped');
+    });
+  });
 
   // Tactile ripple on every button, from the actual click point.
   document.querySelectorAll('.btn').forEach(function(btn){
