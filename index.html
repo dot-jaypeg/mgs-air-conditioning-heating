@@ -74,30 +74,20 @@
   }
 
   /* ============ BRAND AMBIENT BACKGROUND ============ */
-  /* Fixed color-mesh backdrop that shows through every section that doesn't
-     paint its own solid background. Four defined (not blurred) color pools
-     plus a diagonal linear wash; JS eases their positions toward the cursor
-     for a gradient that morphs as you move, instead of a static blur. */
+  /* Fixed linear-gradient backdrop that shows through every section that
+     doesn't paint its own solid background. Oversized (inset -16%) so JS can
+     translate it for a parallax effect on scroll and on cursor move without
+     ever exposing an edge. */
   .brand-bg{
-    position:fixed; inset:0; z-index:-1;
-    background:
-      radial-gradient(640px circle at var(--gx1,26%) var(--gy1,22%), rgba(178,6,6,.55), transparent 58%),
-      radial-gradient(720px circle at var(--gx2,82%) var(--gy2,24%), rgba(13,217,231,.5), transparent 60%),
-      radial-gradient(600px circle at var(--gx3,30%) var(--gy3,78%), rgba(4,6,58,.42), transparent 56%),
-      radial-gradient(640px circle at var(--gx4,78%) var(--gy4,86%), rgba(178,6,6,.4), transparent 58%),
-      linear-gradient(155deg, rgba(178,6,6,.10) 0%, rgba(13,217,231,.12) 50%, rgba(4,6,58,.09) 100%),
-      var(--off);
-  }
-  @media (max-width: 720px){
-    .brand-bg{
-      background:
-        radial-gradient(420px circle at var(--gx1,26%) var(--gy1,22%), rgba(178,6,6,.5), transparent 58%),
-        radial-gradient(460px circle at var(--gx2,82%) var(--gy2,24%), rgba(13,217,231,.46), transparent 60%),
-        radial-gradient(400px circle at var(--gx3,30%) var(--gy3,78%), rgba(4,6,58,.38), transparent 56%),
-        radial-gradient(420px circle at var(--gx4,78%) var(--gy4,86%), rgba(178,6,6,.36), transparent 58%),
-        linear-gradient(155deg, rgba(178,6,6,.10) 0%, rgba(13,217,231,.12) 50%, rgba(4,6,58,.09) 100%),
-        var(--off);
-    }
+    position:fixed; top:-16%; left:-16%; right:-16%; bottom:-16%; z-index:-1;
+    background:linear-gradient(135deg,
+      rgba(178,6,6,.55) 0%,
+      rgba(178,6,6,.22) 22%,
+      var(--off) 45%,
+      rgba(13,217,231,.32) 68%,
+      rgba(13,217,231,.55) 82%,
+      rgba(4,6,58,.5) 100%);
+    will-change:transform;
   }
 
   h1,h2,h3,h4{
@@ -480,7 +470,7 @@
     border:1.5px solid rgba(252,252,252,0.16);
     border-radius:var(--radius-lg);
     overflow:hidden;
-    display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); align-items:stretch;
+    display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); align-items:center;
   }
   .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:14px 0 18px; }
   .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:22px; }
@@ -488,8 +478,8 @@
   .story-card .sign img{ height:48px; width:auto; border-radius:10px; flex-shrink:0; box-shadow:var(--shadow-tight); }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(252,252,252,0.6); margin-top:2px; }
 
-  .story-video{ position:relative; min-height:100%; background:#000; }
-  .story-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .story-video{ position:relative; width:100%; aspect-ratio:9/16; background:#000; align-self:center; }
+  .story-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
   .story-card-body{ padding:44px 44px 44px 40px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
@@ -781,7 +771,7 @@
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
     .story-card{ grid-template-columns:1fr; }
-    .story-video{ min-height:0; aspect-ratio:16/10; }
+    .story-video{ max-width:220px; margin:24px auto 0; }
     .story-card-body{ padding:30px; }
     .gallery-grid{ grid-template-columns:1fr; max-width:340px; }
     .motion-grid{ grid-template-columns:1fr; max-width:300px; gap:22px; }
@@ -1574,37 +1564,41 @@
     });
   }
 
-  // Morphs the brand-bg color mesh toward the cursor: each of the 4 pools
-  // eases at a different rate/direction so the whole gradient feels alive
-  // rather than snapping straight to the pointer.
+  // Parallax on the brand-bg linear gradient: it drifts opposite the scroll
+  // (slower than the page, for depth) and eases toward the cursor position.
+  // Both offsets are clamped well inside the -16% oversize so an edge never
+  // shows, and combined into one transform each frame.
   var brandBg = document.querySelector('.brand-bg');
-  if (brandBg && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    var mx = 50, my = 50, cx = 50, cy = 50, meshRaf = null;
-    function applyMesh(){
-      brandBg.style.setProperty('--gx1', (18 + cx * 0.45) + '%');
-      brandBg.style.setProperty('--gy1', (12 + cy * 0.35) + '%');
-      brandBg.style.setProperty('--gx2', (92 - cx * 0.4) + '%');
-      brandBg.style.setProperty('--gy2', (14 + cy * 0.3) + '%');
-      brandBg.style.setProperty('--gx3', (22 + cx * 0.3) + '%');
-      brandBg.style.setProperty('--gy3', (86 - cy * 0.25) + '%');
-      brandBg.style.setProperty('--gx4', (86 - cx * 0.28) + '%');
-      brandBg.style.setProperty('--gy4', (92 - cy * 0.2) + '%');
+  if (brandBg) {
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var pointerFine = window.matchMedia('(pointer: fine)').matches;
+    var scrollShift = 0, targetPX = 0, targetPY = 0, curPX = 0, curPY = 0, bgRaf = null;
+    function applyBg(){
+      brandBg.style.transform = 'translate3d(' + curPX + 'px,' + (curPY + scrollShift) + 'px,0)';
     }
-    function meshLoop(){
-      cx += (mx - cx) * 0.055;
-      cy += (my - cy) * 0.055;
-      applyMesh();
-      if (Math.abs(mx - cx) > 0.05 || Math.abs(my - cy) > 0.05) {
-        meshRaf = requestAnimationFrame(meshLoop);
+    function bgLoop(){
+      curPX += (targetPX - curPX) * 0.06;
+      curPY += (targetPY - curPY) * 0.06;
+      applyBg();
+      if (Math.abs(targetPX - curPX) > 0.05 || Math.abs(targetPY - curPY) > 0.05) {
+        bgRaf = requestAnimationFrame(bgLoop);
       } else {
-        meshRaf = null;
+        bgRaf = null;
       }
     }
-    window.addEventListener('mousemove', function(e){
-      mx = (e.clientX / window.innerWidth) * 100;
-      my = (e.clientY / window.innerHeight) * 100;
-      if (!meshRaf) meshRaf = requestAnimationFrame(meshLoop);
-    }, {passive:true});
+    if (!reduceMotion) {
+      window.addEventListener('scroll', function(){
+        scrollShift = Math.max(-70, Math.min(70, window.scrollY * 0.08));
+        applyBg();
+      }, {passive:true});
+      if (pointerFine) {
+        window.addEventListener('mousemove', function(e){
+          targetPX = (e.clientX / window.innerWidth - 0.5) * 90;
+          targetPY = (e.clientY / window.innerHeight - 0.5) * 90;
+          if (!bgRaf) bgRaf = requestAnimationFrame(bgLoop);
+        }, {passive:true});
+      }
+    }
   }
 
   // Cursor glow that follows the mouse over the hero and every navy section
