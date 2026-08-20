@@ -74,21 +74,30 @@
   }
 
   /* ============ BRAND AMBIENT BACKGROUND ============ */
-  /* Fixed backdrop of soft red/navy/cyan color washes that shows through every
-     section that doesn't paint its own solid background, so scrolling never
-     hits a flat white panel. */
+  /* Fixed color-mesh backdrop that shows through every section that doesn't
+     paint its own solid background. Four defined (not blurred) color pools
+     plus a diagonal linear wash; JS eases their positions toward the cursor
+     for a gradient that morphs as you move, instead of a static blur. */
   .brand-bg{
-    position:fixed; inset:0; z-index:-1; overflow:hidden; background:var(--off);
+    position:fixed; inset:0; z-index:-1;
+    background:
+      radial-gradient(640px circle at var(--gx1,26%) var(--gy1,22%), rgba(178,6,6,.55), transparent 58%),
+      radial-gradient(720px circle at var(--gx2,82%) var(--gy2,24%), rgba(13,217,231,.5), transparent 60%),
+      radial-gradient(600px circle at var(--gx3,30%) var(--gy3,78%), rgba(4,6,58,.42), transparent 56%),
+      radial-gradient(640px circle at var(--gx4,78%) var(--gy4,86%), rgba(178,6,6,.4), transparent 58%),
+      linear-gradient(155deg, rgba(178,6,6,.10) 0%, rgba(13,217,231,.12) 50%, rgba(4,6,58,.09) 100%),
+      var(--off);
   }
-  .brand-bg span{ position:absolute; border-radius:50%; filter:blur(70px) saturate(1.3); }
-  .brand-bg .b1{ width:560px; height:560px; background:var(--red); opacity:.48; top:-160px; left:-140px; }
-  .brand-bg .b2{ width:640px; height:640px; background:var(--cyan); opacity:.46; top:8%; right:-200px; }
-  .brand-bg .b3{ width:520px; height:520px; background:var(--navy); opacity:.32; top:42%; left:-180px; }
-  .brand-bg .b4{ width:600px; height:600px; background:var(--red); opacity:.44; bottom:-180px; right:6%; }
-  .brand-bg .b5{ width:480px; height:480px; background:var(--cyan); opacity:.44; bottom:2%; left:22%; }
   @media (max-width: 720px){
-    .brand-bg span{ filter:blur(50px); }
-    .brand-bg .b1,.brand-bg .b2,.brand-bg .b3,.brand-bg .b4,.brand-bg .b5{ width:340px; height:340px; }
+    .brand-bg{
+      background:
+        radial-gradient(420px circle at var(--gx1,26%) var(--gy1,22%), rgba(178,6,6,.5), transparent 58%),
+        radial-gradient(460px circle at var(--gx2,82%) var(--gy2,24%), rgba(13,217,231,.46), transparent 60%),
+        radial-gradient(400px circle at var(--gx3,30%) var(--gy3,78%), rgba(4,6,58,.38), transparent 56%),
+        radial-gradient(420px circle at var(--gx4,78%) var(--gy4,86%), rgba(178,6,6,.36), transparent 58%),
+        linear-gradient(155deg, rgba(178,6,6,.10) 0%, rgba(13,217,231,.12) 50%, rgba(4,6,58,.09) 100%),
+        var(--off);
+    }
   }
 
   h1,h2,h3,h4{
@@ -275,6 +284,33 @@
     will-change:transform;
   }
   @media (prefers-reduced-motion: reduce){ .cursor-glow{ display:none; } }
+
+  /* ============ MAGIC CURSOR ============ */
+  /* A geometric dot that replaces the native pointer. mix-blend-mode:difference
+     automatically inverts it against whatever it's over (white on dark,
+     dark on light) with no per-element color logic needed. */
+  .has-magic-cursor, .has-magic-cursor *{ cursor:none; }
+  .magic-cursor{
+    position:fixed; top:0; left:0; z-index:9999;
+    width:16px; height:16px; border-radius:50%;
+    background:#fcfcfc; mix-blend-mode:difference;
+    pointer-events:none; opacity:0;
+    transform:translate(-50%,-50%);
+    transition:width .22s cubic-bezier(.2,.8,.2,1), height .22s cubic-bezier(.2,.8,.2,1),
+      opacity .3s ease, background .2s ease;
+    will-change:transform;
+  }
+  .magic-cursor::after{
+    content:""; position:absolute; inset:0; border-radius:50%;
+    border:1.5px solid #fcfcfc; transform:scale(1.9); opacity:.6;
+    transition:transform .25s cubic-bezier(.2,.8,.2,1), opacity .25s ease;
+  }
+  .magic-cursor.is-active{ width:44px; height:44px; background:transparent; }
+  .magic-cursor.is-active::after{ transform:scale(1.05); opacity:1; }
+  .magic-cursor.is-down{ width:12px; height:12px; }
+  @media (pointer: fine){
+    body.has-magic-cursor{ cursor:none; }
+  }
   /* Every navy section gets the hero's mouse-follow glow instead of a static
      blurred blob, so the color stays dynamic and doesn't sit flat on the dark
      background. The section's own content wrapper needs an explicit stacking
@@ -443,22 +479,18 @@
     background:rgba(252,252,252,0.06);
     border:1.5px solid rgba(252,252,252,0.16);
     border-radius:var(--radius-lg);
-    padding:44px;
+    overflow:hidden;
+    display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); align-items:stretch;
   }
-  .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:0; }
+  .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:14px 0 18px; }
   .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:22px; }
   .story-card .sign{ display:flex; align-items:center; gap:16px; font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
   .story-card .sign img{ height:48px; width:auto; border-radius:10px; flex-shrink:0; box-shadow:var(--shadow-tight); }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(252,252,252,0.6); margin-top:2px; }
 
-  .story-card-top{ display:flex; align-items:center; gap:20px; margin-bottom:24px; }
-  .story-card-intro{ min-width:0; }
-  .story-card-intro .eyebrow{ margin-bottom:12px; }
-  .story-video{
-    position:relative; width:104px; flex-shrink:0; border-radius:var(--radius-md); overflow:hidden;
-    aspect-ratio:9/16; box-shadow:var(--shadow-tight); border:2px solid rgba(252,252,252,.16);
-  }
+  .story-video{ position:relative; min-height:100%; background:#000; }
   .story-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+  .story-card-body{ padding:44px 44px 44px 40px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
   .stat-tile{ background:rgba(252,252,252,0.06); border:1.5px solid rgba(252,252,252,0.16); border-radius:var(--radius-md); padding:24px; transition:border-color .25s ease, background .25s ease; }
@@ -534,15 +566,23 @@
   .social-cta .section-head p{ color:rgba(252,252,252,.7); }
   .social-feature{
     position:relative; z-index:1; display:grid;
-    grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:56px; align-items:center;
+    grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:64px; align-items:stretch;
   }
-  .phone-mock{ justify-self:center; width:min(360px, 100%); }
+  .phone-mock{ justify-self:center; align-self:center; width:min(360px, 100%); perspective:1000px; }
   /* CSS-only iPhone silhouette: dark bezel, Dynamic Island, side buttons,
-     home indicator — a real device frame rather than a generic phone icon. */
+     home indicator — a real device frame rather than a generic phone icon.
+     Tilts toward the cursor (JS) and lifts on hover for a bit of play. */
   .iphone-frame{
     position:relative; width:100%; aspect-ratio:9/19.5; border-radius:72px;
     background:linear-gradient(160deg,#2a2a30,#050507); padding:16px;
-    box-shadow:0 40px 90px -20px rgba(0,0,0,.65), inset 0 0 0 2px rgba(252,252,252,.08);
+    box-shadow:0 40px 90px -20px rgba(0,0,0,.65), inset 0 0 0 2px rgba(252,252,252,.08),
+      0 0 0 0 rgba(13,217,231,0);
+    transform-style:preserve-3d;
+    transition:transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s ease;
+  }
+  .phone-mock:hover .iphone-frame{
+    box-shadow:0 46px 100px -20px rgba(0,0,0,.7), inset 0 0 0 2px rgba(252,252,252,.1),
+      0 0 0 10px rgba(13,217,231,.1);
   }
   .iphone-screen{ position:relative; width:100%; height:100%; border-radius:56px; overflow:hidden; background:#000; }
   .iphone-screen video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
@@ -559,8 +599,25 @@
   .iphone-btn.power{ right:-5px; top:185px; width:5px; height:100px; border-radius:0 4px 4px 0; }
   .iphone-btn.vol-up{ left:-5px; top:150px; width:5px; height:56px; border-radius:4px 0 0 4px; }
   .iphone-btn.vol-down{ left:-5px; top:219px; width:5px; height:56px; border-radius:4px 0 0 4px; }
-  .social-copy h3{ color:#fcfcfc; font-size:clamp(24px,3vw,30px); margin-bottom:14px; }
-  .social-copy > p{ color:rgba(252,252,252,.75); font-size:15.5px; margin-bottom:26px; max-width:480px; }
+  .social-copy{
+    display:flex; flex-direction:column; justify-content:space-between; gap:28px; min-width:0;
+  }
+  .social-copy h3{ color:#fcfcfc; font-size:clamp(28px,3.6vw,38px); margin-bottom:16px; max-width:520px; }
+  .social-copy-lead > p{ color:rgba(252,252,252,.75); font-size:16.5px; line-height:1.6; max-width:480px; }
+  .connect-points{ display:flex; flex-direction:column; gap:16px; }
+  .connect-points div{ display:flex; align-items:flex-start; gap:14px; }
+  .connect-points .pt-icon{
+    width:30px; height:30px; border-radius:50%; flex-shrink:0; margin-top:1px;
+    background:rgba(13,217,231,.14); display:flex; align-items:center; justify-content:center;
+  }
+  .connect-points svg{ width:15px; height:15px; color:var(--cyan); }
+  .connect-points span{ font-size:14.5px; color:rgba(252,252,252,.85); padding-top:5px; }
+  .connect-points strong{ display:block; color:#fcfcfc; font-size:15px; font-weight:700; }
+  .social-links-block{ border-top:1.5px solid rgba(252,252,252,.14); padding-top:24px; }
+  .social-links-label{
+    font-size:12px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:rgba(252,252,252,.5); margin-bottom:14px;
+  }
   .social-links{ display:flex; flex-wrap:wrap; gap:12px; }
   .social-btn{
     display:inline-flex; align-items:center; gap:10px; padding:8px 20px 8px 8px;
@@ -723,9 +780,9 @@
     .footer-grid{ grid-template-columns:1fr; gap:34px; }
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
-    .story-card{ padding:30px; }
-    .story-card-top{ flex-direction:column; align-items:flex-start; }
-    .story-video{ width:88px; }
+    .story-card{ grid-template-columns:1fr; }
+    .story-video{ min-height:0; aspect-ratio:16/10; }
+    .story-card-body{ padding:30px; }
     .gallery-grid{ grid-template-columns:1fr; max-width:340px; }
     .motion-grid{ grid-template-columns:1fr; max-width:300px; gap:22px; }
     .cert-grid{ grid-template-columns:1fr; }
@@ -739,9 +796,7 @@
 </head>
 <body>
 
-<div class="brand-bg" aria-hidden="true">
-  <span class="b1"></span><span class="b2"></span><span class="b3"></span><span class="b4"></span><span class="b5"></span>
-</div>
+<div class="brand-bg" aria-hidden="true"></div>
 
 <!-- ============ UTILITY BAR ============ -->
 <div class="utility-bar">
@@ -1049,23 +1104,21 @@
     </div>
 
     <div class="story-card reveal d1">
-      <div class="story-card-top">
-        <div class="story-video">
-          <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
-            <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
-          </video>
-        </div>
-        <div class="story-card-intro">
-          <div class="eyebrow on-dark">Our Story</div>
-          <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
-        </div>
+      <div class="story-video">
+        <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
+          <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
+        </video>
       </div>
-      <p class="quote">
-        "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
-      </p>
-      <div class="sign">
-        <img src="assets/images/logo-mark.png" alt="MG's Air Conditioning & Heating" />
-        <div>Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+      <div class="story-card-body">
+        <div class="eyebrow on-dark">Our Story</div>
+        <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
+        <p class="quote">
+          "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
+        </p>
+        <div class="sign">
+          <img src="assets/images/logo-mark.png" alt="MG's Air Conditioning & Heating" />
+          <div>Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+        </div>
       </div>
     </div>
   </div>
@@ -1179,13 +1232,23 @@
         </div>
       </div>
       <div class="social-copy">
-        <h3>Wherever the crew goes, you can follow along.</h3>
-        <p>Ask about smart thermostat installs that put your home's comfort in your pocket &mdash; whether you're at work, on vacation, or already headed home. Then follow the crew on social for a real look at the trucks, the jobs, and the day-to-day.</p>
-        <div class="social-links">
-          <a href="https://www.instagram.com/mgs_air_conditioning_" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fcfcfc" stroke="none"/></svg></span>Instagram</a>
-          <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a>
-          <a href="https://www.tiktok.com/@mgsairconditioning" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></span>TikTok</a>
-          <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M12 2 4 20h16z"/></svg></span>Yelp</a>
+        <div class="social-copy-lead">
+          <h3>Wherever the crew goes, you can follow along.</h3>
+          <p>Ask about smart thermostat installs that put your home's comfort in your pocket &mdash; whether you're at work, on vacation, or already headed home.</p>
+        </div>
+        <div class="connect-points">
+          <div><span class="pt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Real jobs, real trucks</strong>No stock footage &mdash; every clip is an actual MG's install or service call.</span></div>
+          <div><span class="pt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Before &amp; after transformations</strong>See the difference a proper install makes on the systems we touch.</span></div>
+          <div><span class="pt-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><span><strong>Tips &amp; seasonal reminders</strong>Quick maintenance advice timed to what the Valley weather is doing.</span></div>
+        </div>
+        <div class="social-links-block">
+          <div class="social-links-label">Follow MG's</div>
+          <div class="social-links">
+            <a href="https://www.instagram.com/mgs_air_conditioning_" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fcfcfc" stroke="none"/></svg></span>Instagram</a>
+            <a href="https://www.facebook.com/mgsair/" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></span>Facebook</a>
+            <a href="https://www.tiktok.com/@mgsairconditioning" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg></span>TikTok</a>
+            <a href="https://www.yelp.com/biz/mgs-air-conditioning-and-heating-visalia" target="_blank" rel="noopener" class="social-btn"><span class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="#fcfcfc" stroke-width="2"><path d="M12 2 4 20h16z"/></svg></span>Yelp</a>
+          </div>
         </div>
       </div>
     </div>
@@ -1469,6 +1532,79 @@
     els.forEach(function(el){ io.observe(el); });
   } else {
     els.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // Magic cursor: a small dot that replaces the native pointer, inverting
+  // color via mix-blend-mode against whatever it's over, and swelling into
+  // a ring over anything clickable. Skipped entirely on touch.
+  if (window.matchMedia('(pointer: fine)').matches) {
+    var magicCursor = document.createElement('div');
+    magicCursor.className = 'magic-cursor';
+    document.body.appendChild(magicCursor);
+    document.body.classList.add('has-magic-cursor');
+    var interactiveSel = 'a, button, input, select, textarea, summary, label, [tabindex], .btn, .service-card, .motion-card, .social-btn, .gallery-grid a, .cert-card, .resource-card';
+    window.addEventListener('mousemove', function(e){
+      magicCursor.style.transform = 'translate(' + e.clientX + 'px,' + e.clientY + 'px) translate(-50%,-50%)';
+      magicCursor.style.opacity = '1';
+    }, {passive:true});
+    document.addEventListener('mouseleave', function(){ magicCursor.style.opacity = '0'; });
+    document.addEventListener('mouseover', function(e){
+      if (e.target.closest(interactiveSel)) magicCursor.classList.add('is-active');
+    });
+    document.addEventListener('mouseout', function(e){
+      if (e.target.closest(interactiveSel)) magicCursor.classList.remove('is-active');
+    });
+    document.addEventListener('mousedown', function(){ magicCursor.classList.add('is-down'); });
+    document.addEventListener('mouseup', function(){ magicCursor.classList.remove('is-down'); });
+  }
+
+  // Stay Connected phone: tilts toward the cursor in 3D while hovered,
+  // easing back flat on mouseleave.
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.phone-mock').forEach(function(mock){
+      var frame = mock.querySelector('.iphone-frame');
+      if (!frame) return;
+      mock.addEventListener('mousemove', function(e){
+        var r = mock.getBoundingClientRect();
+        var px = (e.clientX - r.left) / r.width - 0.5;
+        var py = (e.clientY - r.top) / r.height - 0.5;
+        frame.style.transform = 'rotateY(' + (px * 16) + 'deg) rotateX(' + (py * -16) + 'deg) translateZ(6px)';
+      });
+      mock.addEventListener('mouseleave', function(){ frame.style.transform = ''; });
+    });
+  }
+
+  // Morphs the brand-bg color mesh toward the cursor: each of the 4 pools
+  // eases at a different rate/direction so the whole gradient feels alive
+  // rather than snapping straight to the pointer.
+  var brandBg = document.querySelector('.brand-bg');
+  if (brandBg && window.matchMedia('(pointer: fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    var mx = 50, my = 50, cx = 50, cy = 50, meshRaf = null;
+    function applyMesh(){
+      brandBg.style.setProperty('--gx1', (18 + cx * 0.45) + '%');
+      brandBg.style.setProperty('--gy1', (12 + cy * 0.35) + '%');
+      brandBg.style.setProperty('--gx2', (92 - cx * 0.4) + '%');
+      brandBg.style.setProperty('--gy2', (14 + cy * 0.3) + '%');
+      brandBg.style.setProperty('--gx3', (22 + cx * 0.3) + '%');
+      brandBg.style.setProperty('--gy3', (86 - cy * 0.25) + '%');
+      brandBg.style.setProperty('--gx4', (86 - cx * 0.28) + '%');
+      brandBg.style.setProperty('--gy4', (92 - cy * 0.2) + '%');
+    }
+    function meshLoop(){
+      cx += (mx - cx) * 0.055;
+      cy += (my - cy) * 0.055;
+      applyMesh();
+      if (Math.abs(mx - cx) > 0.05 || Math.abs(my - cy) > 0.05) {
+        meshRaf = requestAnimationFrame(meshLoop);
+      } else {
+        meshRaf = null;
+      }
+    }
+    window.addEventListener('mousemove', function(e){
+      mx = (e.clientX / window.innerWidth) * 100;
+      my = (e.clientY / window.innerHeight) * 100;
+      if (!meshRaf) meshRaf = requestAnimationFrame(meshLoop);
+    }, {passive:true});
   }
 
   // Cursor glow that follows the mouse over the hero and every navy section
