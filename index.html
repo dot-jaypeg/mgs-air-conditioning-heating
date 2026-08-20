@@ -80,12 +80,12 @@
   .brand-bg{
     position:fixed; inset:0; z-index:-1; overflow:hidden; background:var(--off);
   }
-  .brand-bg span{ position:absolute; border-radius:50%; filter:blur(70px); }
-  .brand-bg .b1{ width:560px; height:560px; background:var(--red); opacity:.16; top:-160px; left:-140px; }
-  .brand-bg .b2{ width:640px; height:640px; background:var(--cyan); opacity:.15; top:8%; right:-200px; }
-  .brand-bg .b3{ width:520px; height:520px; background:var(--navy); opacity:.14; top:42%; left:-180px; }
-  .brand-bg .b4{ width:600px; height:600px; background:var(--red); opacity:.13; bottom:-180px; right:6%; }
-  .brand-bg .b5{ width:480px; height:480px; background:var(--cyan); opacity:.14; bottom:2%; left:22%; }
+  .brand-bg span{ position:absolute; border-radius:50%; filter:blur(70px) saturate(1.3); }
+  .brand-bg .b1{ width:560px; height:560px; background:var(--red); opacity:.48; top:-160px; left:-140px; }
+  .brand-bg .b2{ width:640px; height:640px; background:var(--cyan); opacity:.46; top:8%; right:-200px; }
+  .brand-bg .b3{ width:520px; height:520px; background:var(--navy); opacity:.32; top:42%; left:-180px; }
+  .brand-bg .b4{ width:600px; height:600px; background:var(--red); opacity:.44; bottom:-180px; right:6%; }
+  .brand-bg .b5{ width:480px; height:480px; background:var(--cyan); opacity:.44; bottom:2%; left:22%; }
   @media (max-width: 720px){
     .brand-bg span{ filter:blur(50px); }
     .brand-bg .b1,.brand-bg .b2,.brand-bg .b3,.brand-bg .b4,.brand-bg .b5{ width:340px; height:340px; }
@@ -275,6 +275,11 @@
     will-change:transform;
   }
   @media (prefers-reduced-motion: reduce){ .cursor-glow{ display:none; } }
+  /* Every navy section gets the hero's mouse-follow glow instead of a static
+     blurred blob, so the color stays dynamic and doesn't sit flat on the dark
+     background. The section's own content wrapper needs an explicit stacking
+     context so it always paints above the (position:absolute) glow. */
+  .cert-strip > .wrap, .standard > .wrap, .reviews > .wrap, footer > .wrap, .social-cta > .wrap{ position:relative; z-index:1; }
   .hero-overlay{
     position:absolute; inset:0;
     background:
@@ -388,7 +393,7 @@
   .services-note{ margin-top:34px; text-align:center; color:var(--muted); font-size:14.5px; }
 
   /* ============ CERTIFICATIONS ============ */
-  .cert-strip{ padding:64px 0; background:var(--navy-ink); }
+  .cert-strip{ padding:64px 0; background:var(--navy-ink); position:relative; overflow:hidden; }
   .cert-strip .section-head h2, .cert-strip .section-head p{ color:#fcfcfc; }
   .cert-strip .section-head p{ color:rgba(252,252,252,0.65); }
   .cert-grid{ display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px; }
@@ -433,10 +438,6 @@
 
   /* ============ OUR STORY ============ */
   .story{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
-  .story::before{
-    content:""; position:absolute; width:520px; height:520px; border-radius:50%;
-    background:var(--cyan); opacity:0.12; filter:blur(90px); top:-200px; right:-160px;
-  }
   .story-grid{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:64px; align-items:center; }
   .story-card{
     background:rgba(252,252,252,0.06);
@@ -444,25 +445,20 @@
     border-radius:var(--radius-lg);
     padding:44px;
   }
-  .story-card h2{ color:#fcfcfc; font-size:clamp(26px,3.4vw,34px); margin-bottom:18px; }
+  .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:0; }
   .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:22px; }
   .story-card .sign{ display:flex; align-items:center; gap:16px; font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
   .story-card .sign img{ height:48px; width:auto; border-radius:10px; flex-shrink:0; box-shadow:var(--shadow-tight); }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(252,252,252,0.6); margin-top:2px; }
 
+  .story-card-top{ display:flex; align-items:center; gap:20px; margin-bottom:24px; }
+  .story-card-intro{ min-width:0; }
+  .story-card-intro .eyebrow{ margin-bottom:12px; }
   .story-video{
-    position:relative; width:180px; margin-bottom:20px; border-radius:var(--radius-md); overflow:hidden;
+    position:relative; width:104px; flex-shrink:0; border-radius:var(--radius-md); overflow:hidden;
     aspect-ratio:9/16; box-shadow:var(--shadow-tight); border:2px solid rgba(252,252,252,.16);
   }
   .story-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
-  .story-video::after{
-    content:""; position:absolute; inset:0; pointer-events:none;
-    background:linear-gradient(180deg, transparent 55%, rgba(4,6,58,0.8));
-  }
-  .story-video span{
-    position:absolute; left:12px; bottom:11px; right:12px; z-index:1;
-    color:#fcfcfc; font-size:12px; font-weight:700; text-shadow:0 2px 8px rgba(4,6,58,0.5);
-  }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
   .stat-tile{ background:rgba(252,252,252,0.06); border:1.5px solid rgba(252,252,252,0.16); border-radius:var(--radius-md); padding:24px; transition:border-color .25s ease, background .25s ease; }
@@ -534,43 +530,35 @@
 
   /* ============ SMART CONTROL + SOCIAL ============ */
   .social-cta{ background:var(--navy); color:#fcfcfc; position:relative; overflow:hidden; }
-  .social-cta::before{
-    content:""; position:absolute; width:480px; height:480px; border-radius:50%;
-    background:var(--cyan); opacity:.16; filter:blur(100px); top:-180px; right:-140px;
-  }
-  .social-cta::after{
-    content:""; position:absolute; width:420px; height:420px; border-radius:50%;
-    background:var(--red); opacity:.18; filter:blur(100px); bottom:-160px; left:-120px;
-  }
   .social-cta .section-head h2{ color:#fcfcfc; }
   .social-cta .section-head p{ color:rgba(252,252,252,.7); }
   .social-feature{
     position:relative; z-index:1; display:grid;
     grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr); gap:56px; align-items:center;
   }
-  .phone-mock{ justify-self:center; width:230px; }
+  .phone-mock{ justify-self:center; width:min(360px, 100%); }
   /* CSS-only iPhone silhouette: dark bezel, Dynamic Island, side buttons,
      home indicator — a real device frame rather than a generic phone icon. */
   .iphone-frame{
-    position:relative; width:100%; aspect-ratio:9/19.5; border-radius:46px;
-    background:linear-gradient(160deg,#2a2a30,#050507); padding:10px;
-    box-shadow:0 34px 80px -20px rgba(0,0,0,.65), inset 0 0 0 2px rgba(252,252,252,.08);
+    position:relative; width:100%; aspect-ratio:9/19.5; border-radius:72px;
+    background:linear-gradient(160deg,#2a2a30,#050507); padding:16px;
+    box-shadow:0 40px 90px -20px rgba(0,0,0,.65), inset 0 0 0 2px rgba(252,252,252,.08);
   }
-  .iphone-screen{ position:relative; width:100%; height:100%; border-radius:36px; overflow:hidden; background:#000; }
+  .iphone-screen{ position:relative; width:100%; height:100%; border-radius:56px; overflow:hidden; background:#000; }
   .iphone-screen video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; display:block; }
   .iphone-island{
-    position:absolute; top:16px; left:50%; transform:translateX(-50%); z-index:3;
-    width:84px; height:24px; border-radius:16px; background:#000;
+    position:absolute; top:25px; left:50%; transform:translateX(-50%); z-index:3;
+    width:132px; height:38px; border-radius:25px; background:#000;
     box-shadow:inset 0 0 0 1px rgba(252,252,252,.06);
   }
   .iphone-home-bar{
-    position:absolute; bottom:9px; left:50%; transform:translateX(-50%); z-index:3;
-    width:96px; height:4px; border-radius:999px; background:rgba(252,252,252,.55);
+    position:absolute; bottom:14px; left:50%; transform:translateX(-50%); z-index:3;
+    width:150px; height:6px; border-radius:999px; background:rgba(252,252,252,.55);
   }
   .iphone-btn{ position:absolute; background:#050507; }
-  .iphone-btn.power{ right:-3px; top:118px; width:3px; height:64px; border-radius:0 4px 4px 0; }
-  .iphone-btn.vol-up{ left:-3px; top:96px; width:3px; height:36px; border-radius:4px 0 0 4px; }
-  .iphone-btn.vol-down{ left:-3px; top:140px; width:3px; height:36px; border-radius:4px 0 0 4px; }
+  .iphone-btn.power{ right:-5px; top:185px; width:5px; height:100px; border-radius:0 4px 4px 0; }
+  .iphone-btn.vol-up{ left:-5px; top:150px; width:5px; height:56px; border-radius:4px 0 0 4px; }
+  .iphone-btn.vol-down{ left:-5px; top:219px; width:5px; height:56px; border-radius:4px 0 0 4px; }
   .social-copy h3{ color:#fcfcfc; font-size:clamp(24px,3vw,30px); margin-bottom:14px; }
   .social-copy > p{ color:rgba(252,252,252,.75); font-size:15.5px; margin-bottom:26px; max-width:480px; }
   .social-links{ display:flex; flex-wrap:wrap; gap:12px; }
@@ -589,7 +577,7 @@
   .social-btn .icon svg{ width:17px; height:17px; }
 
   /* ============ REVIEWS ============ */
-  .reviews{ background:var(--navy-ink); }
+  .reviews{ background:var(--navy-ink); position:relative; overflow:hidden; }
   .reviews-banner{ text-align:center; }
   .reviews-banner .section-head{ margin:0 auto 30px; }
   .reviews-banner .section-head h2{ color:#fcfcfc; }
@@ -670,7 +658,7 @@
   .resource-card p{ font-size:14px; color:var(--muted); }
 
   /* ============ FOOTER ============ */
-  footer{ background:var(--navy); color:rgba(252,252,252,0.75); padding:70px 0 30px; }
+  footer{ background:var(--navy); color:rgba(252,252,252,0.75); padding:70px 0 30px; position:relative; overflow:hidden; }
   .footer-grid{ display:grid; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.1fr); gap:40px; margin-bottom:50px; }
   .footer-brand p{ font-size:14px; margin:18px 0 22px; max-width:280px; color:rgba(252,252,252,0.55); }
   .footer-social{ display:flex; gap:10px; }
@@ -735,6 +723,9 @@
     .footer-grid{ grid-template-columns:1fr; gap:34px; }
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
+    .story-card{ padding:30px; }
+    .story-card-top{ flex-direction:column; align-items:flex-start; }
+    .story-video{ width:88px; }
     .gallery-grid{ grid-template-columns:1fr; max-width:340px; }
     .motion-grid{ grid-template-columns:1fr; max-width:300px; gap:22px; }
     .cert-grid{ grid-template-columns:1fr; }
@@ -795,7 +786,7 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section class="hero" id="top">
+<section class="hero glow-host" id="top">
   <div class="hero-media">
     <img src="assets/images/hero-fleet.jpg" alt="MG's Air Conditioning & Heating service van fleet parked outside their Visalia shop" />
     <div class="hero-overlay"></div>
@@ -1011,7 +1002,8 @@
 </section>
 
 <!-- ============ CERTIFICATIONS ============ -->
-<section class="cert-strip" id="trust">
+<section class="cert-strip glow-host" id="trust">
+  <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
       <div class="eyebrow on-dark">Built On Trust, Not Talk</div>
@@ -1044,15 +1036,10 @@
 </section>
 
 <!-- ============ OUR STORY ============ -->
-<section class="story" id="story">
+<section class="story glow-host" id="story">
+  <div class="cursor-glow"></div>
   <div class="wrap story-grid">
     <div class="reveal">
-      <div class="story-video">
-        <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
-          <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
-        </video>
-        <span>Our Shop, Visalia CA</span>
-      </div>
       <div class="story-stats">
         <div class="stat-tile reveal"><strong>100%</strong><span>Owner-operated, every single job</span></div>
         <div class="stat-tile reveal d1"><strong>4</strong><span>Counties served within a 1-hour radius</span></div>
@@ -1062,8 +1049,17 @@
     </div>
 
     <div class="story-card reveal d1">
-      <div class="eyebrow on-dark">Our Story</div>
-      <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
+      <div class="story-card-top">
+        <div class="story-video">
+          <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
+            <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="story-card-intro">
+          <div class="eyebrow on-dark">Our Story</div>
+          <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
+        </div>
+      </div>
       <p class="quote">
         "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
       </p>
@@ -1076,7 +1072,8 @@
 </section>
 
 <!-- ============ THE MG'S STANDARD ============ -->
-<section class="standard" id="standard">
+<section class="standard glow-host" id="standard">
+  <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
       <div class="eyebrow on-dark">The Difference</div>
@@ -1158,7 +1155,8 @@
 </section>
 
 <!-- ============ SMART CONTROL + SOCIAL ============ -->
-<section class="social-cta" id="connect">
+<section class="social-cta glow-host" id="connect">
+  <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
       <div class="eyebrow on-dark">Stay Connected</div>
@@ -1195,7 +1193,8 @@
 </section>
 
 <!-- ============ REVIEWS ============ -->
-<section class="reviews" id="reviews">
+<section class="reviews glow-host" id="reviews">
+  <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="reviews-banner reveal">
       <div class="section-head center">
@@ -1367,7 +1366,8 @@
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer>
+<footer class="glow-host">
+  <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="footer-grid">
       <div class="footer-brand">
@@ -1457,30 +1457,33 @@
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
 
+  // Toggles (rather than one-time reveals) so sections animate back out when
+  // scrolled past going up, then back in on the way back down.
   var els = document.querySelectorAll('.reveal');
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
+        entry.target.classList.toggle('is-visible', entry.isIntersecting);
       });
-    }, {threshold:0.12, rootMargin:'0px 0px -40px 0px'});
+    }, {threshold:0.12, rootMargin:'-6% 0px -6% 0px'});
     els.forEach(function(el){ io.observe(el); });
   } else {
     els.forEach(function(el){ el.classList.add('is-visible'); });
   }
 
-  // Cursor glow that follows the mouse within the hero (skipped on touch devices).
-  var glow = document.querySelector('.cursor-glow');
-  if (hero && glow && window.matchMedia('(pointer: fine)').matches) {
-    hero.addEventListener('mousemove', function(e){
-      var r = hero.getBoundingClientRect();
-      glow.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px) translate(-50%,-50%)';
-      glow.style.opacity = '1';
+  // Cursor glow that follows the mouse over the hero and every navy section
+  // (skipped on touch devices, where there's no real cursor to follow).
+  if (window.matchMedia('(pointer: fine)').matches) {
+    document.querySelectorAll('.glow-host').forEach(function(host){
+      var glow = host.querySelector('.cursor-glow');
+      if (!glow) return;
+      host.addEventListener('mousemove', function(e){
+        var r = host.getBoundingClientRect();
+        glow.style.transform = 'translate(' + (e.clientX - r.left) + 'px,' + (e.clientY - r.top) + 'px) translate(-50%,-50%)';
+        glow.style.opacity = '1';
+      });
+      host.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
     });
-    hero.addEventListener('mouseleave', function(){ glow.style.opacity = '0'; });
   }
 
   // Motion-card videos only play while scrolled into view (saves battery/bandwidth),
