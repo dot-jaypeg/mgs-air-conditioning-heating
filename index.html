@@ -211,13 +211,17 @@
   .utility-left svg{ width:14px; height:14px; color:var(--cyan); flex-shrink:0; }
 
   /* ============ HEADER (sticky) ============ */
-  /* Default = frosted glass over the hero photo. .is-scrolled (once past the hero) = solid off-white. */
+  /* Default = frosted navy glass (used over the hero photo, and again over any
+     dark section further down). .is-scrolled = solid off-white, swapped in
+     only while a light-colored section sits directly beneath the header — see
+     the section-theme check in the scroll handler. The background transition
+     is what makes that swap read as a crossfade instead of a hard cut. */
   header{
     position:sticky; top:0; z-index:100;
     background:rgba(4,6,58,0.4);
     backdrop-filter:blur(18px) saturate(1.4);
     -webkit-backdrop-filter:blur(18px) saturate(1.4);
-    transition:box-shadow .3s ease, background .35s ease;
+    transition:box-shadow .3s ease, background .45s ease;
   }
   header.is-scrolled{
     background:rgba(252,252,252,0.97);
@@ -466,21 +470,28 @@
   .story{ background:var(--navy); color:var(--off); position:relative; overflow:hidden; }
   .story-grid{ position:relative; z-index:1; display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:64px; align-items:center; }
   .story-card{
+    position:relative;
     background:rgba(252,252,252,0.06);
     border:1.5px solid rgba(252,252,252,0.16);
     border-radius:var(--radius-lg);
-    overflow:hidden;
-    display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); align-items:center;
+    padding:48px;
   }
-  .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:14px 0 18px; }
-  .story-card .quote{ font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:22px; }
-  .story-card .sign{ display:flex; align-items:center; gap:16px; font-family:"Suisse Intl"; font-weight:700; font-size:16px; }
-  .story-card .sign img{ height:48px; width:auto; border-radius:10px; flex-shrink:0; box-shadow:var(--shadow-tight); }
+  .story-card h2{ color:#fcfcfc; font-size:clamp(24px,2.8vw,32px); margin:14px 0 22px; }
+  .story-card .quote{ position:relative; font-size:18px; line-height:1.65; color:rgba(252,252,252,0.88); margin-bottom:28px; padding-left:30px; }
+  .story-card .quote::before{
+    content:"\201C"; position:absolute; left:-6px; top:-16px;
+    font-family:"Suisse Intl"; font-size:56px; line-height:1; font-weight:700; color:var(--cyan); opacity:.45;
+  }
+  .story-card .sign{
+    display:flex; align-items:center; gap:16px; font-family:"Suisse Intl"; font-weight:700; font-size:16px;
+    padding-top:24px; border-top:1.5px solid rgba(252,252,252,0.12);
+  }
+  .sign-avatar{
+    position:relative; width:52px; height:52px; border-radius:50%; overflow:hidden; flex-shrink:0;
+    box-shadow:var(--shadow-tight); border:2px solid rgba(252,252,252,.22);
+  }
+  .sign-avatar video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
   .story-card .sign span{ display:block; font-family:"Inter"; font-weight:400; font-size:13px; color:rgba(252,252,252,0.6); margin-top:2px; }
-
-  .story-video{ position:relative; width:100%; aspect-ratio:9/16; background:#000; align-self:center; }
-  .story-video video{ position:absolute; inset:0; width:100%; height:100%; object-fit:contain; }
-  .story-card-body{ padding:44px 44px 44px 40px; display:flex; flex-direction:column; justify-content:center; min-width:0; }
 
   .story-stats{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; }
   .stat-tile{ background:rgba(252,252,252,0.06); border:1.5px solid rgba(252,252,252,0.16); border-radius:var(--radius-md); padding:24px; transition:border-color .25s ease, background .25s ease; }
@@ -770,9 +781,7 @@
     .footer-grid{ grid-template-columns:1fr; gap:34px; }
     .booking-side, .booking-form{ padding:36px 26px; }
     section{ padding:64px 0; }
-    .story-card{ grid-template-columns:1fr; }
-    .story-video{ max-width:220px; margin:24px auto 0; }
-    .story-card-body{ padding:30px; }
+    .story-card{ padding:32px; }
     .gallery-grid{ grid-template-columns:1fr; max-width:340px; }
     .motion-grid{ grid-template-columns:1fr; max-width:300px; gap:22px; }
     .cert-grid{ grid-template-columns:1fr; }
@@ -1047,7 +1056,7 @@
 </section>
 
 <!-- ============ CERTIFICATIONS ============ -->
-<section class="cert-strip glow-host" id="trust">
+<section class="cert-strip glow-host" id="trust" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
@@ -1081,7 +1090,7 @@
 </section>
 
 <!-- ============ OUR STORY ============ -->
-<section class="story glow-host" id="story">
+<section class="story glow-host" id="story" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap story-grid">
     <div class="reveal">
@@ -1094,28 +1103,25 @@
     </div>
 
     <div class="story-card reveal d1">
-      <div class="story-video">
-        <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
-          <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
-        </video>
-      </div>
-      <div class="story-card-body">
-        <div class="eyebrow on-dark">Our Story</div>
-        <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
-        <p class="quote">
-          "We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family."
-        </p>
-        <div class="sign">
-          <img src="assets/images/logo-mark.png" alt="MG's Air Conditioning & Heating" />
-          <div>Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
+      <div class="eyebrow on-dark">Our Story</div>
+      <h2>Owner-operated isn't a slogan here &mdash; it's how every job gets done.</h2>
+      <p class="quote">
+        We started this company with one goal: to provide honest, dependable HVAC service and be there when our community needs us most. I'm personally involved in every project &mdash; meeting with customers, providing estimates, and making sure the job is done right, from the first conversation to the final walkthrough. Our customers appreciate knowing they're working directly with the owner, not being passed from salesperson to technician. We treat every home like it's our own, and every customer like family.
+      </p>
+      <div class="sign">
+        <div class="sign-avatar">
+          <video muted loop playsinline autoplay preload="metadata" poster="assets/images/motion-shopfront-poster.jpg">
+            <source src="assets/videos-web/motion-shopfront.mp4" type="video/mp4">
+          </video>
         </div>
+        <div>Miguel Guerra<span>Owner, MG's Air Conditioning &amp; Heating</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ THE MG'S STANDARD ============ -->
-<section class="standard glow-host" id="standard">
+<section class="standard glow-host" id="standard" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
@@ -1198,7 +1204,7 @@
 </section>
 
 <!-- ============ SMART CONTROL + SOCIAL ============ -->
-<section class="social-cta glow-host" id="connect">
+<section class="social-cta glow-host" id="connect" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="section-head center reveal">
@@ -1246,7 +1252,7 @@
 </section>
 
 <!-- ============ REVIEWS ============ -->
-<section class="reviews glow-host" id="reviews">
+<section class="reviews glow-host" id="reviews" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="reviews-banner reveal">
@@ -1419,7 +1425,7 @@
 </section>
 
 <!-- ============ FOOTER ============ -->
-<footer class="glow-host">
+<footer class="glow-host" data-nav-theme="dark">
   <div class="cursor-glow"></div>
   <div class="wrap">
     <div class="footer-grid">
@@ -1502,10 +1508,20 @@
   measureSolidAt();
   window.addEventListener('resize', measureSolidAt);
 
+  // Past the hero, the header should match whatever section currently sits
+  // beneath it (light -> solid off-white, dark -> the same frosted navy the
+  // hero uses) rather than turning solid white for the rest of the page.
+  function sectionThemeBelowHeader(){
+    var probeY = header.offsetHeight + 4;
+    var el = document.elementFromPoint(window.innerWidth / 2, probeY);
+    var themed = el && el.closest ? el.closest('[data-nav-theme]') : null;
+    return themed ? themed.getAttribute('data-nav-theme') : 'light';
+  }
   function onScroll(){
     var y = window.scrollY;
-    if (y > solidAt) header.classList.add('is-scrolled');
-    else header.classList.remove('is-scrolled');
+    var pastHero = y > solidAt;
+    var isLight = pastHero && sectionThemeBelowHeader() === 'light';
+    header.classList.toggle('is-scrolled', isLight);
   }
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
@@ -1618,7 +1634,7 @@
 
   // Motion-card videos only play while scrolled into view (saves battery/bandwidth),
   // and never autoplay for users who've asked for reduced motion.
-  var motionVideos = document.querySelectorAll('.motion-card video, .iphone-screen video, .story-video video');
+  var motionVideos = document.querySelectorAll('.motion-card video, .iphone-screen video, .sign-avatar video');
   if (motionVideos.length && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     if ('IntersectionObserver' in window) {
       var vio = new IntersectionObserver(function(entries){
