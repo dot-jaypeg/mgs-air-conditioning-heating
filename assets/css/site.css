@@ -347,6 +347,10 @@
   .quote-card .btn{ width:100%; margin-top:6px; }
   .quote-card .fine{ font-size:11.5px; color:var(--muted); text-align:center; margin-top:12px; }
 
+  /* ============ EMBEDDED LEAD FORM (Google Ads LPs) ============ */
+  .ghl-form-wrap{ width:100%; min-height:745px; margin:4px 0; }
+  .ghl-form-wrap iframe{ display:block; width:100%; height:745px; border:0; border-radius:8px; }
+
   /* ============ MARQUEE ============ */
   .marquee{ overflow:hidden; background:var(--navy); padding:16px 0; border-top:2px solid var(--navy-ink); border-bottom:2px solid var(--navy-ink); }
   .marquee-track{ display:flex; width:max-content; gap:36px; animation:marquee 19s linear infinite; will-change:transform; }
