@@ -54,8 +54,10 @@
 
   // Magic cursor: a small dot that replaces the native pointer, inverting
   // color via mix-blend-mode against whatever it's over, and swelling into
-  // a ring over anything clickable. Skipped entirely on touch.
-  if (window.matchMedia('(pointer: fine)').matches) {
+  // a ring over anything clickable. Skipped entirely on touch, and on any
+  // page whose <body> opts out via .no-magic-cursor (the LPs, where it kept
+  // glitching over the embedded form iframes).
+  if (window.matchMedia('(pointer: fine)').matches && !document.body.classList.contains('no-magic-cursor')) {
     var magicCursor = document.createElement('div');
     magicCursor.className = 'magic-cursor';
     document.body.appendChild(magicCursor);
