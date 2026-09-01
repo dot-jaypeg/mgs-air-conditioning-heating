@@ -317,6 +317,10 @@
     margin:20px 0 34px;
     text-shadow:0 4px 24px rgba(4,6,58,0.45);
   }
+  /* Landing-page headlines run longer than the homepage's ("Air Conditioner
+     Maintenance" vs. "Comfort that shows up") — a smaller cap keeps the full
+     two-line headline inside three visual rows instead of five. */
+  .hero.lp-hero h1{ font-size:clamp(32px, 4.4vw, 52px); margin:18px 0 28px; }
   .hero h1 .hl{ color:var(--cyan); }
   .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-bottom:36px; max-width:100%; }
 

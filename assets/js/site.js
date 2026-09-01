@@ -74,6 +74,14 @@
     });
     document.addEventListener('mousedown', function(){ magicCursor.classList.add('is-down'); });
     document.addEventListener('mouseup', function(){ magicCursor.classList.remove('is-down'); });
+
+    // mousemove never fires on the parent document while the pointer is over
+    // an <iframe> (separate browsing context), so the fake cursor would
+    // otherwise freeze in place over every embedded form/map. Hide it on
+    // entry and let the next real mousemove bring it back on exit.
+    document.querySelectorAll('iframe').forEach(function(frame){
+      frame.addEventListener('mouseenter', function(){ magicCursor.style.opacity = '0'; });
+    });
   }
 
   // Stay Connected phone: tilts toward the cursor in 3D while hovered,
